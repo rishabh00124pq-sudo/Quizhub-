@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>QuizHub – Premium Online Test Platform</title>
+<meta name="description" content="QuizHub is a free online test platform for Class 9, 10, 11 and 12 students of Bihar Board and CBSE. Timed subject tests, instant results and progress tracking.">
+<meta name="theme-color" content="#05071a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c5cff'/%3E%3Ctext x='32' y='46' font-size='40' text-anchor='middle' fill='white' font-family='Arial' font-weight='700'%3EQ%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#05071a;--bg2:#0a1030;--card:rgba(16,22,66,.72);--card-solid:#0f1640;--line:rgba(90,170,255,.2);
+  --text:#e8ecff;--muted:#8f9bc7;--blue:#12d6ff;--purple:#9b5cff;--pink:#ff3df5;--green:#2bff9e;--red:#ff4d6d;--amber:#ffd23f;
+  --grad:linear-gradient(135deg,#12d6ff 0%,#7a5cff 55%,#ff3df5 100%);--shadow:0 10px 30px rgba(0,0,0,.45);--r:18px;
+  --glow:0 0 0 1px rgba(18,214,255,.4),0 0 26px rgba(18,214,255,.28);
+}
+[data-theme="light"]{
+  --bg:#eef2ff;--bg2:#e3e9ff;--card:rgba(255,255,255,.82);--card-solid:#ffffff;--line:rgba(80,100,200,.18);
+  --text:#161c3d;--muted:#5d6894;--shadow:0 10px 26px rgba(60,80,180,.16);--glow:0 0 0 1px rgba(62,120,255,.2),0 8px 24px rgba(62,120,255,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans","Noto Sans Devanagari",Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(900px 500px at 8% -10%,rgba(18,214,255,.2),transparent 60%),radial-gradient(800px 500px at 100% 0,rgba(155,92,255,.24),transparent 60%),radial-gradient(700px 500px at 50% 110%,rgba(255,61,245,.14),transparent 60%),var(--bg)}
+a{color:var(--blue);text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+img{max-width:100%;display:block}
+h1,h2,h3{line-height:1.2}
+.hidden{display:none!important}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border-radius:14px;font-weight:700;font-size:.95rem;transition:transform .15s,box-shadow .15s,opacity .15s;white-space:nowrap;min-height:44px}
+.btn:active{transform:translateY(2px)}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 5px 0 #4a2fb0,0 10px 22px rgba(139,92,246,.35)}
+.btn-primary:active{box-shadow:0 2px 0 #4a2fb0}
+.btn-ghost{background:var(--card);border:1px solid var(--line);color:var(--text)}
+.btn-danger{background:linear-gradient(135deg,#ff5c7a,#d6336c);color:#fff;box-shadow:0 5px 0 #8f1d45}
+.btn-success{background:linear-gradient(135deg,#27e0a3,#12a37a);color:#04281d;box-shadow:0 5px 0 #0b6b50}
+.btn-sm{padding:7px 12px;font-size:.82rem;min-height:36px;border-radius:11px}
+.btn[disabled]{opacity:.5;pointer-events:none}
+.icon-btn{width:42px;height:42px;border-radius:12px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:1.1rem}
+
+/* ---------- Cards / layout ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.card.flat{backdrop-filter:none;-webkit-backdrop-filter:none}
+.card h2{font-size:1.05rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;justify-content:space-between}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.between{justify-content:space-between}
+.muted{color:var(--muted)}.small{font-size:.82rem}.tiny{font-size:.72rem}
+.center{text-align:center}
+.stack>*+*{margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;font-size:.74rem;font-weight:700;background:rgba(62,166,255,.14);color:var(--blue);border:1px solid rgba(62,166,255,.3)}
+.chip.green{background:rgba(39,224,163,.13);color:var(--green);border-color:rgba(39,224,163,.3)}
+.chip.red{background:rgba(255,92,122,.13);color:var(--red);border-color:rgba(255,92,122,.3)}
+.chip.amber{background:rgba(255,194,62,.13);color:var(--amber);border-color:rgba(255,194,62,.3)}
+.chip.purple{background:rgba(139,92,246,.16);color:#b79cff;border-color:rgba(139,92,246,.35)}
+.divider{height:1px;background:var(--line);margin:14px 0}
+
+/* ---------- Forms ---------- */
+label.f{display:block;font-size:.8rem;font-weight:700;color:var(--muted);margin:10px 0 5px}
+.in,select.in,textarea.in{width:100%;background:rgba(10,16,45,.5);border:1px solid var(--line);border-radius:12px;padding:11px 13px;outline:none;transition:border .15s,box-shadow .15s;min-height:44px}
+[data-theme="light"] .in{background:#fff}
+.in:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(62,166,255,.2)}
+select.in option{background:var(--card-solid);color:var(--text)}
+textarea.in{min-height:84px;resize:vertical}
+.check{display:flex;gap:10px;align-items:center;font-size:.9rem;margin:8px 0;cursor:pointer}
+.check input{width:18px;height:18px;accent-color:var(--purple)}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 14px}
+
+/* ---------- App shell ---------- */
+.shell{display:grid;grid-template-columns:1fr;min-height:100vh}
+.side{display:none}
+.main{padding:16px 14px 96px;max-width:1180px;width:100%;margin:0 auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.3rem;letter-spacing:.5px}
+.logo{width:40px;height:40px;border-radius:12px;background:var(--grad);display:grid;place-items:center;color:#fff;font-weight:900;font-size:1.3rem;box-shadow:0 4px 0 #4a2fb0,0 8px 18px rgba(139,92,246,.4);overflow:hidden;flex:none}
+.logo img{width:100%;height:100%;object-fit:cover}
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:space-around;background:var(--card-solid);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+.bnav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.68rem;color:var(--muted);padding:6px 2px;border-radius:12px;font-weight:700}
+.bnav a .i{font-size:1.25rem}
+.bnav a.on{color:var(--blue)}
+@media(min-width:900px){
+  .shell{grid-template-columns:250px 1fr}
+  .side{display:flex;flex-direction:column;gap:6px;padding:20px 14px;position:sticky;top:0;height:100vh;border-right:1px solid var(--line);background:rgba(10,15,40,.55)}
+  [data-theme="light"] .side{background:rgba(255,255,255,.6)}
+  .side a.nv{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;color:var(--muted);font-weight:700}
+  .side a.nv:hover{background:var(--card)}
+  .side a.nv.on{background:var(--grad);color:#fff;box-shadow:0 4px 0 #4a2fb0}
+  .bnav{display:none}
+  .main{padding:26px 28px 40px}
+}
+
+/* ---------- 3D stat tiles ---------- */
+.tile{position:relative;border-radius:var(--r);padding:16px;background:linear-gradient(160deg,rgba(62,166,255,.22),rgba(139,92,246,.2));border:1px solid var(--line);box-shadow:0 6px 0 rgba(0,0,0,.28),var(--shadow);transition:transform .2s}
+.tile .k{font-size:.74rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+.tile .v{font-size:1.9rem;font-weight:900;margin-top:2px}
+.tile .e{position:absolute;right:12px;top:10px;font-size:1.6rem;opacity:.85}
+@media(hover:hover){.tile:hover,.t3d:hover{transform:perspective(700px) rotateX(3deg) translateY(-3px)}}
+.t3d{transition:transform .2s}
+
+.hero{background:linear-gradient(135deg,rgba(62,166,255,.28),rgba(139,92,246,.32));border-radius:22px;padding:20px;border:1px solid var(--line);display:flex;gap:16px;align-items:center;box-shadow:var(--shadow)}
+.avatar{width:62px;height:62px;border-radius:20px;background:var(--grad);display:grid;place-items:center;font-size:1.7rem;font-weight:900;color:#fff;flex:none;box-shadow:0 5px 0 #4a2fb0;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+
+/* progress */
+.bar{height:10px;border-radius:99px;background:rgba(120,150,255,.16);overflow:hidden}
+.bar>i{display:block;height:100%;border-radius:99px;background:var(--grad);width:0;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.bar.g>i{background:linear-gradient(90deg,#27e0a3,#3ea6ff)}.bar.r>i{background:linear-gradient(90deg,#ff5c7a,#ffc23e)}
+
+/* test cards */
+.tcard{display:flex;flex-direction:column;gap:8px;cursor:pointer;text-decoration:none;color:inherit}
+.tcard h3{font-size:1rem}
+.folder{display:flex;align-items:center;gap:14px;padding:18px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);box-shadow:0 6px 0 rgba(0,0,0,.25),var(--shadow);cursor:pointer;text-align:left;width:100%}
+.folder .fi{font-size:2rem;width:56px;height:56px;border-radius:16px;background:var(--grad);display:grid;place-items:center;flex:none}
+.folder b{font-size:1.1rem;display:block}
+.crumbs{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:.85rem;color:var(--muted);margin-bottom:14px}
+.crumbs a{color:var(--blue);font-weight:700}
+.list-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.list-item:last-child{border-bottom:0}
+.rankno{width:32px;height:32px;border-radius:10px;background:rgba(120,150,255,.16);display:grid;place-items:center;font-weight:900;flex:none}
+.rankno.r1{background:linear-gradient(135deg,#ffd75e,#ff9f1c);color:#3d2600}.rankno.r2{background:linear-gradient(135deg,#e0e6f5,#98a3c4);color:#222}.rankno.r3{background:linear-gradient(135deg,#f0a36b,#b4622a);color:#2b1300}
+
+/* ---------- Toasts / modal ---------- */
+#toasts{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:300;display:flex;flex-direction:column;gap:8px;width:min(92vw,420px);pointer-events:none}
+.toast{pointer-events:auto;background:var(--card-solid);border:1px solid var(--line);border-left:4px solid var(--blue);padding:12px 14px;border-radius:14px;box-shadow:var(--shadow);font-size:.9rem;animation:tin .25s ease}
+.toast.ok{border-left-color:var(--green)}.toast.error{border-left-color:var(--red)}.toast.warn{border-left-color:var(--amber)}
+@keyframes tin{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.ov{position:fixed;inset:0;z-index:200;background:rgba(3,6,20,.72);display:flex;align-items:flex-end;justify-content:center;padding:0;animation:fin .15s}
+.ov .mbox{background:var(--card-solid);border:1px solid var(--line);border-radius:22px 22px 0 0;width:100%;max-width:760px;max-height:92vh;overflow:auto;padding:20px;box-shadow:var(--shadow)}
+.mbox.sm{max-width:440px}
+@media(min-width:700px){.ov{align-items:center;padding:20px}.ov .mbox{border-radius:22px}}
+@keyframes fin{from{opacity:0}to{opacity:1}}
+.mhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px}
+.mhead h2{font-size:1.15rem}
+
+/* ---------- Auth ---------- */
+.auth{min-height:100vh;display:grid;place-items:center;padding:20px}
+.auth .box{width:min(100%,440px)}
+.tabs{display:flex;background:rgba(120,150,255,.12);border-radius:14px;padding:4px;gap:4px;margin-bottom:12px;overflow-x:auto}
+.tabs button{flex:1;padding:9px 12px;border-radius:11px;font-weight:700;color:var(--muted);white-space:nowrap;font-size:.88rem}
+.tabs button.on{background:var(--grad);color:#fff}
+.foot{margin-top:24px;text-align:center;font-size:.8rem;color:var(--muted)}
+.foot a{margin:0 8px;display:inline-block;padding:4px 0}
+
+/* ---------- Ads ---------- */
+.adbox{border:1px dashed var(--line);border-radius:14px;padding:8px;margin:14px 0;text-align:center;min-height:90px;background:rgba(120,150,255,.05);overflow:hidden}
+.adbox .adl{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.adbox img{margin:auto;max-height:260px;border-radius:10px}
+
+/* ---------- Exam ---------- */
+.exam{min-height:100vh;display:flex;flex-direction:column}
+.ehead{position:sticky;top:0;z-index:40;background:var(--card-solid);border-bottom:1px solid var(--line);padding:10px 14px;display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap}
+.timer{font-variant-numeric:tabular-nums;font-weight:900;font-size:1.15rem;padding:7px 14px;border-radius:12px;background:rgba(62,166,255,.15);color:var(--blue);border:1px solid rgba(62,166,255,.35)}
+.timer.low{background:rgba(255,92,122,.16);color:var(--red);border-color:rgba(255,92,122,.4);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.6}}
+.ebody{flex:1;display:grid;gap:14px;padding:14px;max-width:1200px;width:100%;margin:0 auto;grid-template-columns:1fr}
+@media(min-width:900px){.ebody{grid-template-columns:1fr 300px;align-items:start}}
+.qtext{font-size:1.08rem;font-weight:600;white-space:pre-wrap;word-break:break-word}
+.qimg{margin:12px 0;border-radius:14px;max-height:300px;object-fit:contain;background:#fff}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:13px 14px;margin-top:10px;border-radius:15px;background:rgba(120,150,255,.08);border:2px solid var(--line);transition:.15s;min-height:52px}
+.opt .l{width:30px;height:30px;border-radius:9px;background:rgba(120,150,255,.2);display:grid;place-items:center;font-weight:900;flex:none}
+.opt.sel{border-color:var(--blue);background:rgba(62,166,255,.16);box-shadow:var(--glow)}
+.opt.sel .l{background:var(--grad);color:#fff}
+.opt span.t{padding-top:3px;word-break:break-word;white-space:pre-wrap}
+.ebar{position:sticky;bottom:0;background:var(--card-solid);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.pal{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:8px}
+.pal button{height:40px;border-radius:11px;font-weight:800;background:rgba(120,150,255,.12);border:2px solid transparent;font-size:.88rem}
+.pal button.vis{background:rgba(255,92,122,.18);color:var(--red)}
+.pal button.ans{background:rgba(39,224,163,.2);color:var(--green)}
+.pal button.mrk{background:rgba(139,92,246,.3);color:#c7b3ff}
+.pal button.cur{border-color:var(--blue);box-shadow:var(--glow)}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:.72rem;margin-top:12px;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:4px;margin-right:4px;vertical-align:-1px}
+.palwrap{display:none}
+@media(min-width:900px){.palwrap{display:block;position:sticky;top:70px}.palbtn{display:none}}
+.palwrap.open{display:block;position:fixed;left:0;right:0;bottom:0;z-index:150;max-height:70vh;overflow:auto;border-radius:22px 22px 0 0}
+@media(min-width:900px){.palwrap.open{position:sticky;top:70px;max-height:none;border-radius:var(--r)}}
+.sync{font-size:.7rem;padding:3px 8px;border-radius:99px;background:rgba(39,224,163,.14);color:var(--green)}
+.sync.off{background:rgba(255,194,62,.16);color:var(--amber)}
+
+/* ---------- Result ---------- */
+.rhero{text-align:center;padding:26px 16px;border-radius:26px;background:linear-gradient(160deg,rgba(62,166,255,.25),rgba(139,92,246,.32) 60%,rgba(255,79,216,.18));border:1px solid var(--line);box-shadow:0 8px 0 rgba(0,0,0,.28),var(--shadow);position:relative;overflow:hidden}
+.score{font-size:3.6rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+.badge3d{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:14px 8px;border-radius:16px;background:var(--card);border:1px solid var(--line);box-shadow:0 5px 0 rgba(0,0,0,.25);transition:transform .2s}
+.badge3d .b{font-size:2.1rem;filter:drop-shadow(0 4px 6px rgba(0,0,0,.4))}
+.badge3d.locked{opacity:.4;filter:grayscale(1)}
+.ring text{fill:var(--text);font-weight:800}
+.qa{border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;background:rgba(120,150,255,.05)}
+.qa .o{padding:8px 10px;border-radius:10px;margin-top:6px;border:1px solid var(--line);font-size:.92rem;display:flex;gap:8px}
+.qa .o.ok{background:rgba(39,224,163,.15);border-color:rgba(39,224,163,.5)}
+.qa .o.bad{background:rgba(255,92,122,.15);border-color:rgba(255,92,122,.5)}
+.expl{margin-top:10px;padding:10px 12px;border-radius:12px;background:rgba(62,166,255,.1);border-left:3px solid var(--blue);font-size:.9rem;white-space:pre-wrap}
+.svgc text{fill:var(--muted);font-size:10px}
+
+/* ---------- Admin ---------- */
+.atabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:14px;scrollbar-width:thin}
+.atabs a{padding:9px 14px;border-radius:12px;background:var(--card);border:1px solid var(--line);color:var(--muted);font-weight:700;white-space:nowrap;font-size:.88rem}
+.atabs a.on{background:var(--grad);color:#fff;border-color:transparent}
+table.t{width:100%;border-collapse:collapse;font-size:.88rem}
+table.t th,table.t td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+table.t th{font-size:.72rem;text-transform:uppercase;color:var(--muted);letter-spacing:.5px}
+.scroll-x{overflow-x:auto}
+.hbar{display:flex;align-items:center;gap:8px;margin:7px 0;font-size:.82rem}
+.hbar .n{width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:none}
+.hbar .bar{flex:1}
+.hbar .c{width:34px;text-align:right;font-weight:800}
+.empty{text-align:center;padding:26px 10px;color:var(--muted)}
+.loader{display:grid;place-items:center;min-height:50vh}
+.spin{width:38px;height:38px;border-radius:50%;border:4px solid rgba(120,150,255,.2);border-top-color:var(--blue);animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.consent{position:fixed;left:12px;right:12px;bottom:84px;z-index:120;max-width:560px;margin:auto;background:var(--card-solid);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
+@media(min-width:900px){.consent{bottom:20px;left:270px}}
+.page{max-width:780px;margin:0 auto}
+.page h1{font-size:1.6rem;margin-bottom:10px}.page h3{margin:18px 0 6px}.page p,.page li{color:var(--muted);margin-bottom:8px}.page ul{padding-left:20px}
+code.k{background:rgba(120,150,255,.16);padding:2px 6px;border-radius:6px;font-size:.85em;word-break:break-all}
+pre.k{background:rgba(0,0,0,.35);padding:12px;border-radius:12px;overflow:auto;font-size:.8rem;color:#cfe0ff}
+.mascot{display:block;overflow:visible;flex:none}
+.mascot .m-body{animation:bob 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.mascot .m-eyes{animation:blink 4.2s infinite;transform-box:fill-box;transform-origin:center}
+.mascot .m-pupil{animation:look 7s ease-in-out infinite}
+.mascot .mo,.mascot .m-brow,.mascot .m-spark{display:none}
+.m-happy .mo-happy,.m-sad .mo-sad,.m-wow .mo-wow,.m-cheer .mo-cheer,.m-think .mo-think,.m-think .m-brow,.m-cheer .m-spark{display:inline}
+.m-cheer .m-body{animation:hop .55s ease-in-out infinite}
+.m-cheer .m-spark{animation:twinkle .8s infinite}
+.m-sad .m-body{animation:bob 5.5s ease-in-out infinite}
+.m-wow .m-eyes{animation:none;transform:scale(1.12)}
+@keyframes bob{50%{transform:translateY(-4px)}}
+@keyframes hop{50%{transform:translateY(-9px) rotate(3deg)}}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.08)}}
+@keyframes look{0%,100%{transform:translateX(0)}30%{transform:translateX(-2px)}60%{transform:translate(2px,-1px)}}
+@keyframes twinkle{50%{opacity:.2}}
+.bubble{position:relative;background:var(--card-solid);border:1px solid var(--line);border-radius:16px;padding:10px 14px;font-size:.9rem;box-shadow:var(--shadow)}
+.bubble::before{content:"";position:absolute;left:-7px;top:20px;width:12px;height:12px;background:var(--card-solid);border-left:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg)}
+.bubble.c::before{display:none}
+.mrow{display:flex;gap:12px;align-items:center}
+.progress-top{height:4px;background:rgba(120,150,255,.15);border-radius:4px;overflow:hidden}
+.progress-top i{display:block;height:100%;width:0;background:var(--grad);transition:width .4s}
+.qtext,.opt span.t{font-size:var(--qfs,1.05rem)}
+.xtools{display:flex;gap:6px;flex-wrap:wrap}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:400}
+body.in-exam #consent-root{display:none}
+body.in-exam .exam{-webkit-user-select:none;user-select:none}
+.only-m{display:block}
+@media(min-width:900px){.only-m{display:none!important}}
+.o{display:flex;gap:8px}
+
+/* ===== GAMING THEME: neon glow + GPU-friendly animations (transform/opacity only) ===== */
+body::after{content:"";position:fixed;z-index:-1;width:70vmax;height:70vmax;left:-20vmax;top:-20vmax;border-radius:50%;background:radial-gradient(circle,rgba(18,214,255,.16),transparent 65%);pointer-events:none;animation:orb 22s ease-in-out infinite alternate;will-change:transform}
+@keyframes orb{0%{transform:translate(0,0) scale(1)}50%{transform:translate(55vw,25vh) scale(1.15)}100%{transform:translate(20vw,60vh) scale(.95)}}
+#app>*{animation:pin .4s ease both}
+@keyframes pin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.grid>*,.main>.card,.main>.hero{animation:rise .5s ease both}
+.grid>*:nth-child(2){animation-delay:.06s}.grid>*:nth-child(3){animation-delay:.12s}.grid>*:nth-child(4){animation-delay:.18s}.grid>*:nth-child(n+5){animation-delay:.24s}
+@keyframes rise{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.btn-primary{position:relative;overflow:hidden;box-shadow:0 5px 0 #3b1fa0,0 0 24px rgba(18,214,255,.38)}
+.btn-primary::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:sheen 3.6s ease-in-out infinite}
+@keyframes sheen{0%,60%{left:-60%}100%{left:130%}}
+.btn-success{box-shadow:0 5px 0 #0a7a55,0 0 20px rgba(43,255,158,.35)}
+.btn-danger{box-shadow:0 5px 0 #8f1d45,0 0 18px rgba(255,77,109,.3)}
+.card,.tile,.folder,.badge3d{border-color:rgba(90,170,255,.22)}
+.tile{background:linear-gradient(160deg,rgba(18,214,255,.2),rgba(155,92,255,.22) 60%,rgba(255,61,245,.14));overflow:hidden}
+.tile .e{animation:float 3.4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-5px) rotate(4deg)}}
+@media(hover:hover){.card:hover,.folder:hover{border-color:rgba(18,214,255,.6);box-shadow:var(--shadow),0 0 26px rgba(18,214,255,.22)}.folder:hover{transform:translateY(-3px)}}
+.folder{transition:transform .2s,box-shadow .2s,border-color .2s}
+.logo,.avatar{box-shadow:0 4px 0 #3b1fa0,0 0 22px rgba(155,92,255,.55)}
+.logo{animation:float 4s ease-in-out infinite}
+.bar>i{position:relative;overflow:hidden}
+.bar>i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);transform:translateX(-100%);animation:shine 2.2s ease-in-out infinite}
+@keyframes shine{to{transform:translateX(100%)}}
+.opt{transition:transform .12s,border-color .15s,background .15s}
+@media(hover:hover){.opt:hover{border-color:rgba(18,214,255,.55);transform:translateX(3px)}}
+.opt.sel{animation:pop .28s ease}
+@keyframes pop{50%{transform:scale(1.025)}}
+.bnav a.on .i{animation:float 1.8s ease-in-out infinite}
+.side a.nv.on{box-shadow:0 4px 0 #3b1fa0,0 0 20px rgba(18,214,255,.35)}
+.score{filter:drop-shadow(0 0 14px rgba(155,92,255,.5))}
+.rhero{box-shadow:0 8px 0 rgba(0,0,0,.28),0 0 40px rgba(155,92,255,.25)}
+.chip{box-shadow:0 0 10px rgba(18,214,255,.12)}
+.badge3d:not(.locked){box-shadow:0 5px 0 rgba(0,0,0,.25),0 0 18px rgba(255,210,63,.18);animation:rise .5s ease both}
+.timer{box-shadow:0 0 16px rgba(18,214,255,.25)}
+.toast{animation:tin .3s cubic-bezier(.2,1.4,.4,1)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{.bnav,.side,.topbar{display:none}}
+</style>
+</head>
+<body>
+<div id="app"><div class="loader"><div class="spin"></div></div></div>
+<div id="toasts" aria-live="polite"></div>
+<div id="modal-root"></div>
+<div id="consent-root"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<script>
+'use strict';
+/* =====================================================================
+   QUIZHUB – Premium Online Test Platform   (Created by Sushant Rishabh)
+   ---------------------------------------------------------------------
+   STEP 1: paste your Supabase project URL + anon/publishable key below.
+   (These two values are public by design. NEVER put a service_role key here.)
+   ===================================================================== */
+const CONFIG = {
+  SUPABASE_URL: 'https://daghvovfihtsnzvqkllv.supabase.co',            // e.g. https://abcdxyz.supabase.co
+  SUPABASE_ANON_KEY: 'sb_publishable_X8AdDH7ZSR3agEOwxZWUtA__S-LrnkB'
+};
+const configured = /^https?:\/\//.test(CONFIG.SUPABASE_URL) && CONFIG.SUPABASE_ANON_KEY.length > 20 && !CONFIG.SUPABASE_ANON_KEY.startsWith('YOUR_');
+const CREATOR = 'Sushant Rishabh';
+
+/* ---------------- tiny helpers ---------------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const safeUrl = u => { try { const x = new URL(u, location.href); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch { return ''; } };
+const store = {
+  get(k, d = null) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { } },
+  del(k) { try { localStorage.removeItem(k); } catch { } }
+};
+const uuid = () => (crypto.randomUUID ? crypto.randomUUID() : 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2, 12));
+const fmtDate = d => d ? new Date(d).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
+const fmtDT = d => d ? new Date(d).toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '—';
+const fmtDur = s => { s = Math.max(0, Math.round(s || 0)); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60; return h ? `${h}h ${m}m` : m ? `${m}m ${x}s` : `${x}s`; };
+const clock = s => { s = Math.max(0, s); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60; return (h ? h + ':' : '') + String(m).padStart(2, '0') + ':' + String(x).padStart(2, '0'); };
+const num = (v, d = 1) => (Math.round(Number(v || 0) * 10 ** d) / 10 ** d);
+const initials = n => (String(n || 'Q').trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('') || 'Q').toUpperCase();
+const debounce = (fn, ms = 250) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+const toLocalInput = d => { if (!d) return ''; const x = new Date(d); x.setMinutes(x.getMinutes() - x.getTimezoneOffset()); return x.toISOString().slice(0, 16); };
+
+/* ---------------- state ---------------- */
+const S = {
+  sb: null, session: null, profile: null, isAdmin: false, ready: false, recovery: false,
+  settings: { app_name: 'QuizHub', tagline: 'Practice. Compete. Level up.', description: '', logo_url: '', admin_avatar_url: '', contact_email: '', adsense_client: '', ads_enabled: false, banners: [] },
+  classes: [], streams: [], subjects: [], chapters: [], tests: [], ads: [], consent: store.get('quizy_consent')
+};
+let routeSeq = 0; const cleanups = [];
+const onLeave = fn => cleanups.push(fn);
+const runCleanups = () => { while (cleanups.length) { try { cleanups.pop()(); } catch { } } };
+const stale = tok => tok !== routeSeq;
+const byId = (arr, id) => arr.find(x => x.id === id);
+
+/* ---------------- UI primitives ---------------- */
+function toast(msg, type = 'info', ms = 3800) {
+  const el = document.createElement('div'); el.className = 'toast ' + type; el.textContent = msg;
+  $('#toasts').appendChild(el); setTimeout(() => { el.style.opacity = 0; setTimeout(() => el.remove(), 300); }, ms);
+}
+function modal(html, { small = false } = {}) {
+  closeModal();
+  const root = $('#modal-root');
+  root.innerHTML = `<div class="ov" data-act="ov-close"><div class="mbox ${small ? 'sm' : ''}" role="dialog" aria-modal="true">${html}</div></div>`;
+  return root.firstElementChild;
+}
+function closeModal() { $('#modal-root').innerHTML = ''; }
+function confirmBox({ title = 'Are you sure?', message = '', ok = 'Confirm', danger = false } = {}) {
+  return new Promise(res => {
+    const prev = $('#modal-root').innerHTML;
+    const m = modal(`<h2>${esc(title)}</h2><p class="muted" style="margin:10px 0 18px">${esc(message)}</p>
+      <div class="row" style="justify-content:flex-end"><button class="btn btn-ghost" id="cb-no">Cancel</button><button class="btn ${danger ? 'btn-danger' : 'btn-primary'}" id="cb-yes">${esc(ok)}</button></div>`, { small: true });
+    m.onclick = e => { if (e.target === m) { closeModal(); res(false); } };
+    $('#cb-no').onclick = () => { closeModal(); res(false); };
+    $('#cb-yes').onclick = () => { closeModal(); res(true); };
+  });
+}
+const errMsg = e => {
+  if (!navigator.onLine) return 'You are offline. Check your internet connection and try again.';
+  const m = (e && (e.message || e.error_description || e.msg)) || String(e || 'Something went wrong');
+  if (/Failed to fetch|NetworkError|Load failed/i.test(m)) return 'Network problem. Please check your connection and retry.';
+  return m;
+};
+const spinner = () => `<div class="loader"><div class="spin"></div></div>`;
+const setApp = html => { $('#app').innerHTML = html; };
+function busy(btn, on, label) { if (!btn) return; if (on) { btn.dataset.l = btn.innerHTML; btn.disabled = true; btn.innerHTML = label || 'Please wait…'; } else { btn.disabled = false; if (btn.dataset.l) btn.innerHTML = btn.dataset.l; } }
+async function q(p) { const { data, error } = await p; if (error) throw error; return data; }
+const rpc = (fn, args) => q(S.sb.rpc(fn, args));
+const fdata = f => Object.fromEntries(new FormData(f).entries());
+
+/* ---------------- theme ---------------- */
+function applyTheme() { document.documentElement.setAttribute('data-theme', store.get('quizy_theme', 'dark')); }
+function toggleTheme() { store.set('quizy_theme', store.get('quizy_theme', 'dark') === 'dark' ? 'light' : 'dark'); applyTheme(); const b = $('[data-act="theme"]'); if (b) b.textContent = store.get('quizy_theme') === 'dark' ? '🌙' : '☀️'; }
+
+/* ---------------- branding ---------------- */
+const appName = () => (S.settings.app_name && S.settings.app_name !== 'Quizy') ? S.settings.app_name : 'QuizHub';
+const logoHTML = () => `<div class="logo">${safeUrl(S.settings.logo_url) ? `<img src="${esc(safeUrl(S.settings.logo_url))}" alt="logo">` : 'Q'}</div>`;
+const brand = () => `<a class="brand" href="#/">${logoHTML()}<span>${esc(appName()).toUpperCase()}</span></a>`;
+function footerLinks() {
+  return `<div class="foot">${[['privacy', 'Privacy'], ['terms', 'Terms'], ['about', 'About'], ['contact', 'Contact'], ['disclaimer', 'Disclaimer'], ['study', 'Study Tips']].map(x => `<a href="#/p/${x[0]}">${x[1]}</a>`).join('')}<br>
+  <span class="tiny">© ${new Date().getFullYear()} ${esc(appName())} · Created by ${CREATOR}</span><br>
+  <a href="#" data-act="cookie-settings" class="tiny">Cookie settings</a></div>`;
+}
+function topbar(title) {
+  const g = S.profile?.is_guest;
+  return `<div class="topbar"><div class="row"><div class="only-m">${logoHTML()}</div><h1 style="font-size:1.25rem">${esc(title)}</h1></div>
+   <div class="row">${g ? `<button class="btn btn-primary btn-sm" data-act="upgrade">Register</button>` : ''}
+   <button class="icon-btn" data-act="sound" aria-label="Sound effects">${soundOn() ? '🔊' : '🔇'}</button><button class="icon-btn" data-act="theme" aria-label="Toggle theme">${store.get('quizy_theme', 'dark') === 'dark' ? '🌙' : '☀️'}</button></div></div>`;
+}
+function shell(active, title, inner) {
+  const nav = [['home', '#/', '🏠', 'Home'], ['browse', '#/browse', '📚', 'Tests'], ['progress', '#/progress', '📈', 'Progress'], ['lb', '#/leaderboard', '🏆', 'Ranks'], ['profile', '#/profile', '👤', 'Profile']];
+  if (S.isAdmin) nav.push(['admin', '#/admin', '🛠️', 'Admin']);
+  return `<div class="shell"><aside class="side">${brand()}<div style="height:12px"></div>
+    ${nav.map(n => `<a class="nv ${active === n[0] ? 'on' : ''}" href="${n[1]}"><span>${n[2]}</span>${n[3]}</a>`).join('')}
+    <div style="flex:1"></div>${footerLinks()}</aside>
+    <main class="main">${topbar(title)}${inner}<div class="only-m">${footerLinks()}</div></main>
+    <nav class="bnav">${nav.map(n => `<a class="${active === n[0] ? 'on' : ''}" href="${n[1]}"><span class="i">${n[2]}</span>${n[3]}</a>`).join('')}</nav></div>`;
+}
+
+/* ---------------- ads (admin controlled, never during an exam) ---------------- */
+function adConfig(p) {
+  if (!S.settings.ads_enabled || S.consent !== 'yes') return null;
+  const a = S.ads.find(x => x.placement === p && x.is_active); if (!a) return null;
+  if (a.ad_type === 'adsense') { if (!/^ca-pub-\d{8,20}$/.test(S.settings.adsense_client || '') || !/^\d{5,20}$/.test(a.adsense_slot || '')) return null; }
+  else if (!safeUrl(a.image_url)) return null;
+  return a;
+}
+const adHTML = p => adConfig(p) ? `<div class="adbox" data-ad="${p}"><div class="adl">Advertisement</div></div>` : '';
+let adsenseLoaded = false;
+function mountAds(root = document) {
+  $$('[data-ad]', root).forEach(el => {
+    if (el.dataset.done) return; el.dataset.done = 1;
+    const a = adConfig(el.dataset.ad); if (!a) { el.remove(); return; }
+    if (a.ad_type === 'adsense') {
+      if (!adsenseLoaded) { adsenseLoaded = true; const s = document.createElement('script'); s.async = true; s.crossOrigin = 'anonymous'; s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + encodeURIComponent(S.settings.adsense_client); document.head.appendChild(s); }
+      const ins = document.createElement('ins'); ins.className = 'adsbygoogle'; ins.style.display = 'block';
+      ins.setAttribute('data-ad-client', S.settings.adsense_client); ins.setAttribute('data-ad-slot', a.adsense_slot);
+      ins.setAttribute('data-ad-format', 'auto'); ins.setAttribute('data-full-width-responsive', 'true'); el.appendChild(ins);
+      try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch { }
+    } else {
+      const link = document.createElement('a'); link.href = safeUrl(a.link_url) || '#'; link.target = '_blank'; link.rel = 'sponsored noopener noreferrer';
+      const img = document.createElement('img'); img.src = safeUrl(a.image_url); img.alt = a.title || 'Advertisement'; img.loading = 'lazy';
+      if (safeUrl(a.link_url)) { link.appendChild(img); el.appendChild(link); } else el.appendChild(img);
+    }
+  });
+}
+
+/* ---------------- consent + privacy-friendly analytics ---------------- */
+function consentBanner() {
+  if (S.consent) { $('#consent-root').innerHTML = ''; return; }
+  $('#consent-root').innerHTML = `<div class="consent"><b>🍪 Cookies &amp; privacy</b>
+   <p class="small muted" style="margin:6px 0 10px">${esc(appName())} stores your theme and exam progress on this device. With your permission we also count anonymous visits and may show Google ads. Read our <a href="#/p/privacy">Privacy Policy</a>.</p>
+   <div class="row"><button class="btn btn-primary btn-sm" data-act="consent-yes">Accept all</button><button class="btn btn-ghost btn-sm" data-act="consent-no">Essential only</button></div></div>`;
+}
+async function trackVisit() {
+  if (S.consent !== 'yes' || !S.sb) return;
+  try {
+    let vid = store.get('quizy_vid'); if (!vid) { vid = uuid(); store.set('quizy_vid', vid); }
+    const key = vid + new Date().toDateString(); if (store.get('quizy_tv') === key) return;
+    await S.sb.rpc('track_visit', { p_visitor_id: vid, p_registered: !!(S.session && !S.profile?.is_guest) });
+    store.set('quizy_tv', key);
+  } catch { }
+}
+
+/* ---------------- data loading ---------------- */
+async function loadSettings() {
+  try {
+    const rows = await q(S.sb.from('website_settings').select('key,value'));
+    rows.forEach(r => { S.settings[r.key] = r.value; });
+    if (!Array.isArray(S.settings.banners)) S.settings.banners = [];
+    document.title = appName() + ' – Premium Online Test Platform';
+    const d = $('meta[name="description"]'); if (d && S.settings.description) d.content = S.settings.description;
+  } catch (e) { /* tables may not exist yet; setup screen handles later */ }
+}
+async function loadCatalog() {
+  const [classes, streams, subjects, chapters, tests, ads] = await Promise.all([
+    q(S.sb.from('classes').select('*').order('sort_order')), q(S.sb.from('streams').select('*').order('sort_order')),
+    q(S.sb.from('subjects').select('*').eq('is_active', true).order('sort_order')), q(S.sb.from('chapters').select('*').order('sort_order')),
+    q(S.sb.from('tests').select('*').eq('is_published', true).order('created_at', { ascending: false })),
+    q(S.sb.from('advertisements').select('*').eq('is_active', true))]);
+  Object.assign(S, { classes, streams, subjects, chapters, tests, ads }); S.ready = true;
+}
+async function loadUser() {
+  const uid = S.session?.user?.id; if (!uid) return;
+  const [prof, roles] = await Promise.all([S.sb.from('profiles').select('*').eq('id', uid).maybeSingle(), S.sb.from('user_roles').select('role').eq('user_id', uid)]);
+  S.profile = prof.data; S.isAdmin = !!(roles.data || []).some(r => r.role === 'admin');
+  await loadCatalog();
+}
+const clsName = id => byId(S.classes, id)?.name || '';
+const subjName = id => byId(S.subjects, id)?.name || '';
+const subjIcon = id => byId(S.subjects, id)?.icon || '📘';
+const strName = id => byId(S.streams, id)?.name || '';
+function testStatus(t) { const n = Date.now(); if (t.start_at && n < new Date(t.start_at)) return 'upcoming'; if (t.end_at && n > new Date(t.end_at)) return 'ended'; return 'live'; }
+
+/* ---------------- boot ---------------- */
+async function boot() {
+  applyTheme();
+  document.addEventListener('click', onClick);
+  document.addEventListener('submit', onSubmit);
+  document.addEventListener('input', onInput);
+  window.addEventListener('hashchange', route);
+  if (!configured) return route();
+  S.sb = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
+  try {
+    await loadSettings();
+    const { data } = await S.sb.auth.getSession(); S.session = data.session;
+    if (S.session) await loadUser();
+  } catch (e) { toast(errMsg(e), 'error'); }
+  S.sb.auth.onAuthStateChange((ev, session) => {
+    setTimeout(async () => {
+      try {
+        if (ev === 'PASSWORD_RECOVERY') { S.recovery = true; S.session = session; return route(); }
+        if (ev === 'SIGNED_OUT') { Object.assign(S, { session: null, profile: null, isAdmin: false, ready: false }); if (!/^#\/p\//.test(location.hash)) location.hash = '#/'; return route(); }
+        if (ev === 'SIGNED_IN' || ev === 'USER_UPDATED') {
+          const changed = session?.user?.id !== S.session?.user?.id || ev === 'USER_UPDATED'; S.session = session;
+          if (changed) { await loadUser(); route(); }
+        }
+        if (ev === 'TOKEN_REFRESHED') S.session = session;
+      } catch (e) { toast(errMsg(e), 'error'); }
+    }, 0);
+  });
+  consentBanner(); trackVisit();
+  window.addEventListener('online', () => toast('Back online', 'ok'));
+  window.addEventListener('offline', () => toast('You are offline – answers are kept on this device', 'warn'));
+  route();
+}
+
+/* ---------------- router ---------------- */
+async function route() {
+  runCleanups(); const tok = ++routeSeq; closeModal(); window.scrollTo(0, 0);
+  const parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean); const r = parts[0] || '';
+  try {
+    if (!configured) return viewSetup();
+    if (r === 'p') return viewPage(parts[1]);
+    if (S.recovery) return viewRecovery();
+    if (!S.session) return viewAuth();
+    if (!S.profile) { setApp(spinner()); await loadUser(); if (stale(tok)) return; }
+    if (S.profile?.is_blocked) return viewBlocked();
+    if (!S.ready) { setApp(spinner()); await loadCatalog(); if (stale(tok)) return; }
+    switch (r) {
+      case '': return viewHome(tok);
+      case 'browse': return viewBrowse(parts.slice(1));
+      case 'test': return viewTest(parts[1], tok);
+      case 'exam': return viewExam(parts[1], tok);
+      case 'result': return viewResult(parts[1], tok);
+      case 'leaderboard': return viewLeaderboard(tok);
+      case 'progress': return viewProgress(tok);
+      case 'revise': return viewRevise(tok);
+      case 'profile': return viewProfile(tok);
+      case 'admin': return viewAdmin(parts.slice(1), tok);
+      default: location.hash = '#/';
+    }
+  } catch (e) {
+    if (stale(tok)) return;
+    setApp(`<div class="auth"><div class="card box center"><h2 style="justify-content:center">😕 Something went wrong</h2><p class="muted" style="margin:10px 0 16px">${esc(errMsg(e))}</p>
+      <div class="row" style="justify-content:center"><button class="btn btn-primary" data-act="reload">Try again</button><a class="btn btn-ghost" href="#/">Home</a></div></div></div>`);
+  }
+}
+
+/* ---------------- event delegation ---------------- */
+const ACT = {}; const FORMS = {}; const INPUTS = {};
+function onClick(e) { const el = e.target.closest('[data-act]'); if (!el) return; const a = el.dataset.act; if (a === 'ov-close') { if (e.target === el) closeModal(); return; } if (ACT[a]) { if (el.tagName === 'A' && el.getAttribute('href') === '#') e.preventDefault(); ACT[a](el, e); } }
+function onSubmit(e) { const f = e.target.closest('[data-form]'); if (!f) return; e.preventDefault(); const fn = FORMS[f.dataset.form]; if (fn) fn(f, e); }
+function onInput(e) { const el = e.target.closest('[data-in]'); if (el && INPUTS[el.dataset.in]) INPUTS[el.dataset.in](el, e); }
+ACT.theme = () => toggleTheme();
+ACT.reload = () => route();
+ACT['modal-close'] = () => closeModal();
+ACT['consent-yes'] = () => { S.consent = 'yes'; store.set('quizy_consent', 'yes'); consentBanner(); trackVisit(); toast('Preferences saved', 'ok'); };
+ACT['consent-no'] = () => { S.consent = 'no'; store.set('quizy_consent', 'no'); consentBanner(); toast('Only essential storage will be used', 'ok'); };
+ACT['cookie-settings'] = () => { S.consent = null; store.del('quizy_consent'); consentBanner(); };
+ACT.logout = async () => { try { await S.sb.auth.signOut(); toast('Signed out', 'ok'); } catch (e) { toast(errMsg(e), 'error'); } };
+
+/* ---------------- setup screen ---------------- */
+function viewSetup() {
+  setApp(`<div class="auth"><div class="card box stack"><div class="row">${logoHTML()}<h1>QuizHub setup needed</h1></div>
+   <p class="muted">Open <code class="k">index.html</code> in a text editor and paste your Supabase values into the <code class="k">CONFIG</code> block at the top of the script:</p>
+   <pre class="k">const CONFIG = {
+  SUPABASE_URL: 'https://xxxx.supabase.co',
+  SUPABASE_ANON_KEY: 'your-anon-or-publishable-key'
+};</pre>
+   <p class="small muted">Find them in Supabase → Project Settings → API. Use the <b>anon / publishable</b> key only – never the service_role key. Then run <code class="k">supabase.sql</code> in the SQL Editor and redeploy.</p></div></div>`);
+}
+
+/* ---------------- authentication ---------------- */
+let authTab = 'login';
+function classOptions(sel) { return S.classes.map(c => `<option value="${c.id}" ${sel === c.id ? 'selected' : ''}>${esc(c.name)}</option>`).join(''); }
+async function viewAuth() {
+  if (!S.classes.length) { try { S.classes = await q(S.sb.from('classes').select('*').order('sort_order')); S.streams = await q(S.sb.from('streams').select('*').order('sort_order')); } catch { } }
+  const tab = authTab;
+  const form = tab === 'login' ? `<form data-form="login"><label class="f">Email</label><input class="in" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+      <label class="f">Password</label><input class="in" name="password" type="password" required autocomplete="current-password" minlength="6" placeholder="Your password">
+      <button class="btn btn-primary" style="width:100%;margin-top:16px" type="submit">Log in</button>
+      <p class="center small" style="margin-top:12px"><a href="#" data-act="auth-tab" data-t="forgot">Forgot password?</a></p></form>`
+    : tab === 'register' ? `<form data-form="register"><label class="f">Full name</label><input class="in" name="full_name" required maxlength="80" autocomplete="name" placeholder="Your name">
+      <label class="f">Email</label><input class="in" name="email" type="email" required autocomplete="email">
+      <label class="f">Password (min 8 characters)</label><input class="in" name="password" type="password" required minlength="8" autocomplete="new-password">
+      <div class="form-grid"><div><label class="f">Board</label><select class="in" name="board"><option>Bihar Board</option><option>CBSE</option></select></div>
+      <div><label class="f">Class</label><select class="in" name="class_id" data-in="reg-class">${classOptions()}</select></div></div>
+      <div id="reg-stream" class="hidden"><label class="f">Stream</label><select class="in" name="stream_id">${S.streams.map(s => `<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:16px" type="submit">Create account</button>
+      <p class="tiny muted center" style="margin-top:8px">We'll email you a link to verify your address.</p></form>`
+    : `<form data-form="forgot"><p class="muted small">Enter your email and we'll send a password reset link.</p><label class="f">Email</label><input class="in" name="email" type="email" required>
+      <button class="btn btn-primary" style="width:100%;margin-top:16px" type="submit">Send reset link</button>
+      <p class="center small" style="margin-top:12px"><a href="#" data-act="auth-tab" data-t="login">Back to login</a></p></form>`;
+  setApp(`<div class="auth"><div class="box"><div class="center" style="margin-bottom:18px"><div style="display:flex;justify-content:center">${mascot('happy', 108)}</div><div class="bubble c" style="display:inline-block;margin:6px 0 10px">Hi! I'm Quizzy 👋 Let's practise!</div><br><div style="display:inline-flex">${brand()}</div><p class="muted" style="margin-top:8px">${esc(S.settings.tagline || '')}</p></div>
+   <div class="card"><div class="tabs"><button class="${tab === 'login' ? 'on' : ''}" data-act="auth-tab" data-t="login">Log in</button><button class="${tab === 'register' ? 'on' : ''}" data-act="auth-tab" data-t="register">Register</button></div>${form}
+   <div class="divider"></div><button class="btn btn-ghost" style="width:100%" data-act="guest">🎮 Continue as guest</button>
+   <p class="tiny muted center" style="margin-top:8px">Guests can take tests and register later without losing progress.</p></div>${footerLinks()}</div></div>`);
+}
+ACT['auth-tab'] = el => { authTab = el.dataset.t; viewAuth(); };
+INPUTS['reg-class'] = el => { const c = byId(S.classes, el.value); $('#reg-stream').classList.toggle('hidden', !c?.has_streams); };
+ACT.guest = async el => {
+  busy(el, true, 'Starting…');
+  try { const { error } = await S.sb.auth.signInAnonymously(); if (error) throw error; location.hash = '#/'; }
+  catch (e) { busy(el, false); toast(/anonymous/i.test(errMsg(e)) ? 'Guest mode is disabled. Enable "Anonymous sign-ins" in Supabase → Authentication → Providers.' : errMsg(e), 'error', 6000); }
+};
+FORMS.login = async f => {
+  const b = $('button[type=submit]', f); busy(b, true, 'Logging in…'); const d = fdata(f);
+  try { const { error } = await S.sb.auth.signInWithPassword({ email: d.email.trim(), password: d.password }); if (error) throw error; location.hash = '#/'; }
+  catch (e) { busy(b, false); toast(/not confirmed/i.test(errMsg(e)) ? 'Please verify your email first – check your inbox.' : /invalid login/i.test(errMsg(e)) ? 'Wrong email or password.' : errMsg(e), 'error'); }
+};
+FORMS.register = async f => {
+  const b = $('button[type=submit]', f); busy(b, true, 'Creating…'); const d = fdata(f); const c = byId(S.classes, d.class_id);
+  try {
+    const { data, error } = await S.sb.auth.signUp({ email: d.email.trim(), password: d.password, options: { emailRedirectTo: location.origin + location.pathname, data: { full_name: d.full_name.trim(), board: d.board, class_id: d.class_id, stream_id: c?.has_streams ? d.stream_id : null } } });
+    if (error) throw error;
+    if (data.session) { toast('Welcome to QuizHub!', 'ok'); location.hash = '#/'; }
+    else { busy(b, false); authTab = 'login'; toast('Account created! Check your email and click the verification link, then log in.', 'ok', 7000); viewAuth(); }
+  } catch (e) { busy(b, false); toast(errMsg(e), 'error'); }
+};
+FORMS.forgot = async f => {
+  const b = $('button[type=submit]', f); busy(b, true, 'Sending…');
+  try { const { error } = await S.sb.auth.resetPasswordForEmail(fdata(f).email.trim(), { redirectTo: location.origin + location.pathname }); if (error) throw error; busy(b, false); toast('If that email exists, a reset link is on its way.', 'ok', 6000); }
+  catch (e) { busy(b, false); toast(errMsg(e), 'error'); }
+};
+function viewRecovery() {
+  setApp(`<div class="auth"><div class="card box"><h2 style="font-size:1.3rem">Set a new password</h2><form data-form="recover"><label class="f">New password (min 8)</label><input class="in" name="password" type="password" minlength="8" required autocomplete="new-password">
+   <button class="btn btn-primary" style="width:100%;margin-top:16px" type="submit">Update password</button></form></div></div>`);
+}
+FORMS.recover = async f => {
+  const b = $('button[type=submit]', f); busy(b, true);
+  try { const { error } = await S.sb.auth.updateUser({ password: fdata(f).password }); if (error) throw error; S.recovery = false; toast('Password updated', 'ok'); location.hash = '#/'; route(); }
+  catch (e) { busy(b, false); toast(errMsg(e), 'error'); }
+};
+function viewBlocked() {
+  setApp(`<div class="auth"><div class="card box center"><div style="font-size:3rem">⛔</div><h2 style="justify-content:center">Account blocked</h2><p class="muted" style="margin:10px 0 16px">Your account has been blocked by the administrator. Contact support if you think this is a mistake.</p>
+   <button class="btn btn-primary" data-act="logout">Log out</button></div></div>`);
+}
+ACT.upgrade = () => {
+  modal(`<div class="mhead"><h2>Create your account</h2><button class="icon-btn" data-act="modal-close">✕</button></div>
+   <p class="muted small">Your guest progress stays with you – we simply attach an email and password to this session.</p>
+   <form data-form="upgrade"><label class="f">Email</label><input class="in" name="email" type="email" required><label class="f">Password (min 8)</label><input class="in" name="password" type="password" minlength="8" required autocomplete="new-password">
+   <label class="f">Your name</label><input class="in" name="full_name" maxlength="80" required value="${esc(S.profile?.full_name === 'Guest' ? '' : S.profile?.full_name)}">
+   <button class="btn btn-primary" style="width:100%;margin-top:16px" type="submit">Save my progress</button></form>`, { small: true });
+};
+FORMS.upgrade = async f => {
+  const b = $('button[type=submit]', f); busy(b, true, 'Saving…'); const d = fdata(f);
+  try {
+    const { error } = await S.sb.auth.updateUser({ email: d.email.trim(), password: d.password, data: { full_name: d.full_name.trim() } }, { emailRedirectTo: location.origin + location.pathname });
+    if (error) throw error;
+    await S.sb.from('profiles').update({ full_name: d.full_name.trim() }).eq('id', S.session.user.id);
+    closeModal(); toast('Almost done! Open the verification email we sent to finish registering.', 'ok', 7000);
+  } catch (e) { busy(b, false); toast(errMsg(e), 'error'); }
+};
+
+/* ---------------- static / AdSense-readiness pages ---------------- */
+function pageContent(p) {
+  const n = esc(appName()), mail = S.settings.contact_email;
+  const pages = {
+    privacy: ['Privacy Policy', `<p>Last updated: ${new Date().toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}. This policy explains what ${n} collects and how it is used.</p>
+      <h3>Information we collect</h3><ul><li><b>Account data:</b> name, email address, class, stream and board that you provide when you register. Passwords are handled by Supabase Authentication and are never stored by us in readable form.</li><li><b>Guest data:</b> if you continue as a guest we create an anonymous session so your attempts can be saved.</li><li><b>Test data:</b> your answers, scores, time taken and results.</li><li><b>Anonymous visit counts:</b> only if you accept cookies, a random identifier stored on your device is used to count unique daily visitors. It contains no personal information.</li></ul>
+      <h3>How we use it</h3><p>To run tests, calculate results, show leaderboards, improve the platform and keep it secure. We do not sell personal data.</p>
+      <h3>Cookies, local storage and advertising</h3><p>We use browser storage for your theme, login session and exam progress. When advertising is enabled, Google and its partners may use cookies to serve ads based on your visits to this and other sites. You can manage ad personalisation at <a href="https://adssettings.google.com" target="_blank" rel="noopener">Google Ads Settings</a>, and change your choice any time via “Cookie settings”.</p>
+      <h3>Data storage and security</h3><p>Data is stored with Supabase using row-level security so students can only read their own results. Leaderboards show only display names and scores.</p>
+      <h3>Your choices</h3><p>You may ask us to correct or delete your account and data by contacting us${mail ? ' at <a href="mailto:' + esc(mail) + '">' + esc(mail) + '</a>' : ' through the Contact page'}.</p>
+      <h3>Children</h3><p>${n} is designed for school students. Students under 13 should use the platform with a parent or guardian’s guidance.</p>`],
+    terms: ['Terms and Conditions', `<p>By using ${n} you agree to these terms.</p><h3>Use of the service</h3><ul><li>Use the platform only for learning and self-assessment.</li><li>Do not attempt to access other users’ data, copy question banks in bulk, interfere with the service, or use automated tools to take tests.</li><li>Keep your login details private. You are responsible for activity on your account.</li></ul>
+      <h3>Content</h3><p>Tests, questions and explanations are provided for educational practice. They may contain errors; please verify important facts with your textbooks and teachers.</p>
+      <h3>Accounts</h3><p>We may suspend accounts that break these terms or abuse the platform.</p><h3>Availability</h3><p>We try to keep the service available but do not guarantee uninterrupted access. The service is provided “as is”.</p>
+      <h3>Changes</h3><p>We may update these terms; continued use means you accept the updated terms.</p>`],
+    about: ['About Us', `<p>${n} is a free online examination platform built for Class 9, 10, 11 and 12 students following the <b>Bihar Board</b> and <b>CBSE</b> syllabus.</p>
+      <p>Students can take timed, chapter-wise and subject-wise tests, get instant marks with detailed explanations, understand their strengths and weaknesses, and compete on a friendly leaderboard.</p>
+      <h3>Our mission</h3><p>Make high-quality exam practice accessible to every student on any phone, even with a slow connection.</p>
+      <h3>Created by</h3><div class="row" style="margin-bottom:8px">${safeUrl(S.settings.admin_avatar_url) ? `<img src="${esc(safeUrl(S.settings.admin_avatar_url))}" alt="${CREATOR}" style="width:64px;height:64px;border-radius:18px;object-fit:cover">` : ''}<p style="margin:0"><b style="color:var(--text)">${CREATOR}</b> – founder and developer of ${n}.</p></div>
+      <p>${esc(S.settings.description || '')}</p>`],
+    contact: ['Contact Us', `<p>Questions, feedback, corrections to a question, or a privacy request? We’d love to hear from you.</p>
+      ${mail ? `<div class="card flat stack"><p style="margin:0">Email: <a href="mailto:${esc(mail)}">${esc(mail)}</a></p>
+      <form data-form="contact"><label class="f">Your name</label><input class="in" name="name" required maxlength="80"><label class="f">Subject</label><input class="in" name="subject" required maxlength="120"><label class="f">Message</label><textarea class="in" name="message" required maxlength="2000"></textarea>
+      <button class="btn btn-primary" style="margin-top:14px" type="submit">Open in my email app</button></form></div>`
+        : `<div class="card flat"><p style="margin:0">The administrator has not added a contact email yet. (Admin: add it under Admin → Website.)</p></div>`}`],
+    disclaimer: ['Disclaimer', `<p>${n} is an independent educational practice platform. It is <b>not affiliated with, endorsed by or officially connected to</b> the Bihar School Examination Board (BSEB), the Central Board of Secondary Education (CBSE) or any government body.</p>
+      <p>Questions and explanations are created for practice and may not reflect the exact pattern or difficulty of board examinations. Scores on ${n} do not predict or guarantee actual exam results.</p>
+      <p>Advertisements, when shown, are served by third parties; ${n} does not endorse advertised products. We make no guarantee that the website will earn advertising approval, availability or error-free operation.</p>`],
+    study: ['Study Tips for Board Exam Students', `<p>Good preparation is a habit, not a last-minute sprint. These simple methods work for Class 9–12 students.</p>
+      <h3>1. Study in short focused blocks</h3><p>Work for 25–40 minutes, then rest for 5–10. Your memory is strongest at the start and end of a session.</p>
+      <h3>2. Practise with timed tests</h3><p>Reading a chapter feels productive, but answering questions is what builds recall. Take a timed test after each chapter and review every mistake.</p>
+      <h3>3. Learn from wrong answers</h3><p>For each incorrect answer ask: was it a concept gap, a careless slip or a time problem? Write the correct idea in one line in your own words.</p>
+      <h3>4. Revise at spaced intervals</h3><p>Revisit a topic after 1 day, 1 week and 1 month. Short repeated revision beats one long reading.</p>
+      <h3>5. Manage negative marking</h3><p>If a test has negative marking, skip questions you are truly unsure of on the first pass and return to them with the time you have left.</p>
+      <h3>6. Sleep and health</h3><p>Seven to eight hours of sleep, water and a short walk improve concentration more than extra late-night hours.</p>`]
+  };
+  return pages[p];
+}
+FORMS.contact = f => { const d = fdata(f), mail = S.settings.contact_email; if (!mail) return; location.href = `mailto:${mail}?subject=${encodeURIComponent(d.subject)}&body=${encodeURIComponent(d.message + '\n\n— ' + d.name)}`; };
+function viewPage(p) {
+  const c = pageContent(p); if (!c) { location.hash = '#/'; return; }
+  const body = `<div class="page"><div class="card"><h1>${c[0]}</h1>${c[1]}</div></div>`;
+  document.title = c[0] + ' – ' + appName();
+  if (S.session && S.profile) setApp(shell('', c[0], body));
+  else setApp(`<div class="main"><div class="row between" style="margin-bottom:16px">${brand()}<div class="row"><a class="btn btn-ghost btn-sm" href="#/">← Back</a><button class="icon-btn" data-act="theme">${store.get('quizy_theme', 'dark') === 'dark' ? '🌙' : '☀️'}</button></div></div>${body}${footerLinks()}</div>`);
+}
+
+/* =====================================================================
+   SVG / animation helpers
+   ===================================================================== */
+function ringSVG(pct, { size = 108, stroke = 11, color = '#3ea6ff', label = '' } = {}) {
+  const r = (size - stroke) / 2, c = 2 * Math.PI * r, off = c * (1 - Math.min(100, Math.max(0, pct)) / 100), m = size / 2;
+  return `<svg class="ring" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="${esc(label)}">
+   <circle cx="${m}" cy="${m}" r="${r}" fill="none" stroke="rgba(120,150,255,.2)" stroke-width="${stroke}"/>
+   <circle cx="${m}" cy="${m}" r="${r}" fill="none" stroke="${color}" stroke-width="${stroke}" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c}" data-off="${off}" style="transition:stroke-dashoffset 1s ease" transform="rotate(-90 ${m} ${m})"/>
+   <text x="50%" y="50%" text-anchor="middle" dy=".35em" font-size="${size * .21}">${esc(label)}</text></svg>`;
+}
+function donutSVG(parts) {
+  const total = parts.reduce((a, p) => a + p.v, 0) || 1, r = 40, c = 2 * Math.PI * r; let acc = 0;
+  return `<svg width="150" height="150" viewBox="0 0 100 100" role="img" aria-label="Answer breakdown"><circle cx="50" cy="50" r="${r}" fill="none" stroke="rgba(120,150,255,.15)" stroke-width="14"/>
+  ${parts.filter(p => p.v > 0).map(p => { const len = p.v / total * c; const s = `<circle cx="50" cy="50" r="${r}" fill="none" stroke="${p.color}" stroke-width="14" stroke-dasharray="${len} ${c - len}" stroke-dashoffset="${-acc}" transform="rotate(-90 50 50)"/>`; acc += len; return s; }).join('')}
+  <text x="50" y="54" text-anchor="middle" font-size="14" font-weight="800" fill="currentColor">${total === 1 && !parts.some(p => p.v) ? 0 : parts.reduce((a, p) => a + p.v, 0)}</text></svg>`;
+}
+function lineSVG(pts) {
+  if (!pts.length) return `<div class="empty">No attempts yet</div>`;
+  const W = 340, H = 150, px = 28, py = 16, n = pts.length;
+  const X = i => n === 1 ? W / 2 : px + i * (W - px - 10) / (n - 1), Y = v => H - py - (Math.min(100, Math.max(0, v)) / 100) * (H - py * 2);
+  const path = pts.map((p, i) => `${i ? 'L' : 'M'}${X(i).toFixed(1)},${Y(p.v).toFixed(1)}`).join(' ');
+  return `<svg class="svgc" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Performance over time">
+   ${[0, 50, 100].map(g => `<line x1="${px}" x2="${W - 6}" y1="${Y(g)}" y2="${Y(g)}" stroke="rgba(120,150,255,.2)" stroke-dasharray="3 4"/><text x="2" y="${Y(g) + 3}">${g}%</text>`).join('')}
+   <defs><linearGradient id="lg" x1="0" x2="1"><stop offset="0" stop-color="#3ea6ff"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+   <path d="${path}" fill="none" stroke="url(#lg)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+   ${pts.map((p, i) => `<circle cx="${X(i)}" cy="${Y(p.v)}" r="4.5" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"><title>${esc(p.t || '')} ${num(p.v)}%</title></circle>`).join('')}</svg>`;
+}
+function hbars(rows, { suffix = '', max, cls = '' } = {}) {
+  if (!rows.length) return `<div class="empty">No data yet</div>`;
+  const m = max || Math.max(...rows.map(r => r.n), 1);
+  return rows.map(r => `<div class="hbar"><span class="n" title="${esc(r.name)}">${esc(r.name)}</span><div class="bar ${cls}"><i data-w="${Math.max(2, r.n / m * 100)}"></i></div><span class="c">${num(r.n)}${suffix}</span></div>`).join('');
+}
+function animateIn(root = document) {
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    $$('[data-off]', root).forEach(c => c.style.strokeDashoffset = c.dataset.off);
+    $$('[data-w]', root).forEach(b => b.style.width = b.dataset.w + '%');
+    $$('[data-count]', root).forEach(el => {
+      const to = parseFloat(el.dataset.count), dec = +(el.dataset.dec || 0), suf = el.dataset.suf || '';
+      if (matchMedia('(prefers-reduced-motion:reduce)').matches) { el.textContent = to.toFixed(dec) + suf; return; }
+      const t0 = performance.now(); const step = t => { const p = Math.min(1, (t - t0) / 1000), e = 1 - Math.pow(1 - p, 3); el.textContent = (to * e).toFixed(dec) + suf; if (p < 1) requestAnimationFrame(step); }; requestAnimationFrame(step);
+    });
+  }));
+}
+
+/* =====================================================================
+   Student data helpers
+   ===================================================================== */
+const myAttempts = () => q(S.sb.from('test_attempts').select('id,test_id,percentage,score,total_marks,submitted_at,time_taken_seconds,passed').eq('user_id', S.session.user.id).eq('status', 'submitted').order('submitted_at', { ascending: false }).limit(300));
+const testTitle = id => byId(S.tests, id)?.title || 'Test';
+function histRow(a) {
+  return `<a class="list-item" href="#/result/${a.id}" style="color:inherit"><div class="rankno">${esc(subjIcon(byId(S.tests, a.test_id)?.subject_id))}</div>
+   <div style="flex:1;min-width:0"><b style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(testTitle(a.test_id))}</b><span class="small muted">${fmtDate(a.submitted_at)} · ${fmtDur(a.time_taken_seconds)}</span></div>
+   <span class="chip ${a.passed ? 'green' : 'red'}">${num(a.percentage)}%</span></a>`;
+}
+function lbRow(r, i, me) {
+  return `<div class="list-item" ${r.user_id === me ? 'style="background:rgba(62,166,255,.1);border-radius:12px;padding-left:8px"' : ''}><div class="rankno ${i < 3 ? 'r' + (i + 1) : ''}">${i + 1}</div>
+   <div style="flex:1;min-width:0"><b style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.display_name)}${r.user_id === me ? ' (you)' : ''}</b><span class="small muted">${r.tests_taken} tests · avg ${num(r.avg_percentage)}%</span></div><b>${num(r.points, 0)} pts</b></div>`;
+}
+
+/* ---------------- Home ---------------- */
+const HF = { q: '', cls: '', subj: '', sort: 'new', limit: 9 };
+let attemptedSet = new Set();
+function testCard(t) {
+  const st = testStatus(t), done = attemptedSet.has(t.id);
+  return `<a class="card tcard t3d" href="#/test/${t.id}"><div class="row between"><span class="chip purple">${esc(subjIcon(t.subject_id))} ${esc(subjName(t.subject_id))}</span>
+    ${st === 'upcoming' ? '<span class="chip amber">Upcoming</span>' : st === 'ended' ? '<span class="chip red">Ended</span>' : done ? '<span class="chip green">✓ Attempted</span>' : '<span class="chip">Live</span>'}</div>
+    <h3>${esc(t.title)}</h3><div class="small muted">${esc(clsName(t.class_id))}${t.stream_id ? ' · ' + esc(strName(t.stream_id)) : ''}</div>
+    <div class="row small muted"><span>⏱ ${t.duration_minutes} min</span><span>❓ ${t.question_count} Qs</span><span>🎯 ${num(t.total_marks)} marks</span></div>
+    ${st === 'upcoming' && t.start_at ? `<div class="tiny amber" style="color:var(--amber)">Starts ${fmtDT(t.start_at)}</div>` : ''}</a>`;
+}
+function renderTestList() {
+  const box = $('#tests-list'); if (!box) return; const qq = HF.q.trim().toLowerCase();
+  let list = S.tests.filter(t => (!HF.cls || t.class_id === HF.cls) && (!HF.subj || subjName(t.subject_id) === HF.subj) && (!qq || (t.title + ' ' + subjName(t.subject_id) + ' ' + (t.description || '')).toLowerCase().includes(qq)));
+  if (HF.sort === 'short') list.sort((a, b) => a.duration_minutes - b.duration_minutes); else if (HF.sort === 'long') list.sort((a, b) => b.duration_minutes - a.duration_minutes);
+  const shown = list.slice(0, HF.limit);
+  box.innerHTML = list.length ? `<div class="grid g2">${shown.map(testCard).join('')}</div>${list.length > shown.length ? `<div class="center" style="margin-top:14px"><button class="btn btn-ghost" data-act="more-tests">Show more (${list.length - shown.length})</button></div>` : ''}`
+    : `<div class="empty">🔎 No tests match your search.</div>`;
+}
+INPUTS.tf = el => { HF[el.dataset.k] = el.value; HF.limit = 9; renderTestList(); };
+ACT['more-tests'] = () => { HF.limit += 9; renderTestList(); };
+
+async function viewHome(tok) {
+  setApp(shell('home', 'Dashboard', spinner()));
+  const [att, ann, lb] = await Promise.all([myAttempts(), q(S.sb.from('announcements').select('*').eq('is_active', true).order('created_at', { ascending: false }).limit(4)), q(S.sb.from('leaderboard').select('*').order('points', { ascending: false }).limit(5))]);
+  if (stale(tok)) return;
+  attemptedSet = new Set(att.map(a => a.test_id));
+  const n = att.length, avg = n ? att.reduce((s, a) => s + Number(a.percentage), 0) / n : 0, best = n ? Math.max(...att.map(a => Number(a.percentage))) : 0;
+  const p = S.profile || {}, me = S.session.user.id;
+  const gs = gameStats(att);
+  const gmsg = !n ? "Hi! I'm Quizzy 👋 Take your first test and let's start your streak!" : gs.today ? `Great job today! ${gs.streak}-day streak 🔥 Keep it going!` : gs.streak ? `Your ${gs.streak}-day streak is waiting – take one test today! 🔥` : 'Ready for a new challenge today? 🚀';
+  const gcard = `<div class="card" style="margin:14px 0"><div class="mrow">${mascot(gs.today ? 'cheer' : 'happy', 84)}<div style="flex:1;min-width:0"><div class="bubble">${esc(gmsg)}</div></div></div>
+   <div class="divider"></div><div class="row between"><b>Level ${gs.level} · ${gs.title}</b><span class="chip amber">🔥 ${gs.streak} day streak</span></div>
+   <div class="bar" style="margin:8px 0"><i data-w="${Math.max(2, gs.pct)}"></i></div><div class="tiny muted">${gs.xp} XP · ${gs.next} XP to level ${gs.level + 1} · Daily goal: ${gs.today ? '✅ done' : 'take 1 test today'}</div></div>`;
+  const names = [...new Set(S.subjects.map(s => s.name))].sort();
+  const banners = (S.settings.banners || []).filter(b => b.active !== false && safeUrl(b.image_url));
+  const inner = `
+  ${p.is_guest ? `<div class="card flat row between" style="margin-bottom:14px;border-color:rgba(255,194,62,.4)"><div><b>🎮 You're playing as a guest</b><div class="small muted">Register to keep your history, appear on the leaderboard and sync across devices.</div></div><button class="btn btn-primary btn-sm" data-act="upgrade">Register free</button></div>` : ''}
+  <div class="hero"><div class="avatar">${esc(initials(p.full_name))}</div><div style="min-width:0"><div class="muted small">Welcome back 👋</div><h2 style="font-size:1.4rem;overflow:hidden;text-overflow:ellipsis">${esc(p.full_name || 'Student')}</h2>
+    <div class="row" style="margin-top:6px">${p.board ? `<span class="chip">${esc(p.board)}</span>` : ''}${p.class_id ? `<span class="chip purple">${esc(clsName(p.class_id))}${p.stream_id ? ' · ' + esc(strName(p.stream_id)) : ''}</span>` : ''}${p.is_guest ? '<span class="chip amber">Guest</span>' : ''}</div></div></div>
+  ${gcard}<div class="row" style="margin-bottom:14px"><a class="btn btn-ghost btn-sm" href="#/progress">📈 My progress</a><a class="btn btn-ghost btn-sm" href="#/revise">📓 Revise mistakes</a></div><div class="grid g3" style="margin:14px 0"><div class="tile"><span class="e">📝</span><div class="k">Tests attempted</div><div class="v" data-count="${n}">0</div></div>
+   <div class="tile"><span class="e">📊</span><div class="k">Average</div><div class="v" data-count="${avg}" data-dec="1" data-suf="%">0%</div></div>
+   <div class="tile"><span class="e">🏅</span><div class="k">Best score</div><div class="v" data-count="${best}" data-dec="1" data-suf="%">0%</div></div></div>
+  ${banners.map(b => { const img = `<img src="${esc(safeUrl(b.image_url))}" alt="${esc(b.title || 'Banner')}" loading="lazy" style="width:100%;border-radius:16px;max-height:200px;object-fit:cover">`; return `<div style="margin-bottom:12px">${safeUrl(b.link_url) ? `<a href="${esc(safeUrl(b.link_url))}" target="_blank" rel="noopener noreferrer">${img}</a>` : img}</div>`; }).join('')}
+  ${ann.length ? `<div class="card" style="margin-bottom:14px"><h2>📢 Announcements</h2>${ann.map(a => `<div class="list-item" style="align-items:flex-start"><div><b>${esc(a.title)}</b><div class="small muted" style="white-space:pre-wrap">${esc(a.body || '')}</div><div class="tiny muted">${fmtDate(a.created_at)}</div></div></div>`).join('')}</div>` : ''}
+  <div class="card" style="margin-bottom:14px"><h2>🎯 Available tests <a class="small" href="#/browse">Browse by class →</a></h2>
+   <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px">
+    <input class="in" style="grid-column:1/-1" placeholder="🔎 Search tests…" data-in="tf" data-k="q" value="${esc(HF.q)}">
+    <select class="in" data-in="tf" data-k="cls"><option value="">All classes</option>${classOptions(HF.cls)}</select>
+    <select class="in" data-in="tf" data-k="subj"><option value="">All subjects</option>${names.map(s => `<option ${HF.subj === s ? 'selected' : ''}>${esc(s)}</option>`).join('')}</select>
+    <select class="in" data-in="tf" data-k="sort"><option value="new">Newest</option><option value="short" ${HF.sort === 'short' ? 'selected' : ''}>Shortest</option><option value="long" ${HF.sort === 'long' ? 'selected' : ''}>Longest</option></select></div>
+   <div id="tests-list"></div></div>
+  <div class="grid g2"><div class="card"><h2>🕘 Recent history ${n > 5 ? '<a class="small" href="#/profile">All →</a>' : ''}</h2>${att.slice(0, 5).map(histRow).join('') || '<div class="empty">Take your first test to see results here.</div>'}</div>
+   <div class="card"><h2>🏆 Leaderboard <a class="small" href="#/leaderboard">Full →</a></h2>${lb.map((r, i) => lbRow(r, i, me)).join('') || '<div class="empty">Be the first on the board!</div>'}</div></div>`;
+  setApp(shell('home', 'Dashboard', inner)); renderTestList(); animateIn();
+}
+
+/* ---------------- Browse: class → (stream) → subject → tests ---------------- */
+function viewBrowse(parts) {
+  const [cid, sid, subid] = parts; const cls = byId(S.classes, cid), stream = sid && sid !== '0' ? byId(S.streams, sid) : null, subj = byId(S.subjects, subid);
+  const cnt = fn => S.tests.filter(fn).length; let crumbs = `<a href="#/browse">Classes</a>`, body = '', title = 'Choose a class';
+  if (!cls) {
+    body = `<div class="grid g2">${S.classes.map(c => `<a class="folder" href="#/browse/${c.id}"><div class="fi">📁</div><div><b>${esc(c.name)}</b><span class="small muted">${cnt(t => t.class_id === c.id)} tests${c.has_streams ? ' · Science, Commerce, Arts' : ''}</span></div></a>`).join('')}</div>`;
+  } else if (cls.has_streams && !stream) {
+    title = cls.name; crumbs += ` › <b>${esc(cls.name)}</b>`;
+    body = `<p class="muted" style="margin-bottom:12px">Select your stream</p><div class="grid g3">${S.streams.map(s => `<a class="folder" href="#/browse/${cls.id}/${s.id}"><div class="fi">${s.name === 'Science' ? '🔬' : s.name === 'Commerce' ? '💹' : '🎨'}</div><div><b>${esc(s.name)}</b><span class="small muted">${cnt(t => t.class_id === cls.id && t.stream_id === s.id)} tests</span></div></a>`).join('')}</div>`;
+  } else if (!subj) {
+    title = cls.name + (stream ? ' · ' + stream.name : ''); crumbs += ` › <a href="#/browse/${cls.id}">${esc(cls.name)}</a>${stream ? ` › <b>${esc(stream.name)}</b>` : ''}`;
+    const subs = S.subjects.filter(s => s.class_id === cls.id && (stream ? s.stream_id === stream.id : !s.stream_id));
+    body = subs.length ? `<div class="grid g2">${subs.map(s => `<a class="folder" href="#/browse/${cls.id}/${stream ? stream.id : 0}/${s.id}"><div class="fi">${esc(s.icon || '📘')}</div><div><b>${esc(s.name)}</b><span class="small muted">${cnt(t => t.subject_id === s.id)} tests</span></div></a>`).join('')}</div>` : `<div class="empty">No subjects yet.</div>`;
+  } else {
+    title = subj.name; crumbs += ` › <a href="#/browse/${cls.id}">${esc(cls.name)}</a>${stream ? ` › <a href="#/browse/${cls.id}/${stream.id}">${esc(stream.name)}</a>` : ''} › <b>${esc(subj.name)}</b>`;
+    const list = S.tests.filter(t => t.subject_id === subj.id); const chs = S.chapters.filter(c => c.subject_id === subj.id);
+    body = list.length ? `<div class="grid g2">${list.map(t => `${testCard(t).replace('<div class="small muted">', `<div class="small muted">${esc(byId(chs, t.chapter_id)?.name || 'Full subject')} · `)}`).join('')}</div>` : `<div class="empty">📭 No tests published for ${esc(subj.name)} yet. Check back soon!</div>`;
+  }
+  setApp(shell('browse', title, `<div class="crumbs">${crumbs}</div>${body}`));
+}
+
+/* ---------------- Test detail / instructions (pre-test ad lives here) ---------------- */
+async function viewTest(id, tok) {
+  const t = byId(S.tests, id); if (!t) { toast('This test is not available', 'warn'); location.hash = '#/browse'; return; }
+  setApp(shell('browse', t.title, spinner()));
+  const [att, open] = await Promise.all([q(S.sb.from('test_attempts').select('id,percentage,passed,submitted_at,status').eq('test_id', id).eq('user_id', S.session.user.id).order('started_at', { ascending: false })), Promise.resolve()]);
+  if (stale(tok)) return;
+  const done = att.filter(a => a.status === 'submitted'), inprog = att.find(a => a.status === 'in_progress'), st = testStatus(t);
+  const blockSingle = t.single_attempt && done.length && !inprog; const per = t.question_count ? t.total_marks / t.question_count : 0;
+  const canStart = (st === 'live' || inprog) && !blockSingle && t.question_count > 0;
+  const inner = `<div class="crumbs"><a href="#/browse/${t.class_id}${t.stream_id ? '/' + t.stream_id : ''}/${t.subject_id}">← ${esc(subjName(t.subject_id))} tests</a></div>
+   <div class="card"><div class="row"><span class="chip purple">${esc(subjIcon(t.subject_id))} ${esc(subjName(t.subject_id))}</span><span class="chip">${esc(clsName(t.class_id))}${t.stream_id ? ' · ' + esc(strName(t.stream_id)) : ''}</span>${t.chapter_id ? `<span class="chip">${esc(byId(S.chapters, t.chapter_id)?.name || '')}</span>` : ''}</div>
+   <h1 style="font-size:1.5rem;margin:10px 0 6px">${esc(t.title)}</h1><p class="muted" style="white-space:pre-wrap">${esc(t.description || '')}</p>
+   <div class="grid g4" style="margin:16px 0"><div class="tile"><div class="k">Duration</div><div class="v" style="font-size:1.4rem">${t.duration_minutes}m</div></div><div class="tile"><div class="k">Questions</div><div class="v" style="font-size:1.4rem">${t.question_count}</div></div>
+   <div class="tile"><div class="k">Total marks</div><div class="v" style="font-size:1.4rem">${num(t.total_marks)}</div></div><div class="tile"><div class="k">Pass mark</div><div class="v" style="font-size:1.4rem">${num(t.pass_percentage, 0)}%</div></div></div>
+   <h3 style="margin-bottom:6px">Instructions</h3><ul class="muted" style="padding-left:20px;line-height:1.8">
+    <li>Each question carries ${num(per, 2)} marks.</li><li>${t.negative_marks > 0 ? `<b style="color:var(--red)">Negative marking: −${num(t.negative_marks, 2)}</b> for every wrong answer.` : 'No negative marking.'}</li>
+    <li>The timer starts when you press Start. The test is submitted automatically when time ends.</li><li>Your answers are saved automatically – if the page refreshes you can resume.</li>
+    <li>${t.single_attempt ? '<b>Single attempt only</b> – you cannot retake this test.' : 'You may attempt this test more than once.'}</li>${t.start_at ? `<li>Opens: ${fmtDT(t.start_at)}</li>` : ''}${t.end_at ? `<li>Closes: ${fmtDT(t.end_at)}</li>` : ''}
+    <li>Advertisements are never shown while you are taking the test.</li></ul>
+   ${adHTML('pre_test')}
+   <div class="row" style="margin-top:16px">${canStart ? `<a class="btn btn-primary" href="#/exam/${t.id}">${inprog ? '▶ Resume test' : '🚀 Start test'}</a>` : `<button class="btn btn-ghost" disabled>${st === 'upcoming' ? 'Not started yet' : st === 'ended' ? 'Test ended' : blockSingle ? 'Already attempted' : 'Unavailable'}</button>`}
+   <a class="btn btn-ghost" href="#/browse">Back</a></div></div>
+   ${done.length ? `<div class="card" style="margin-top:14px"><h2>Your attempts</h2>${done.map(a => `<a class="list-item" href="#/result/${a.id}" style="color:inherit"><div style="flex:1"><b>${fmtDT(a.submitted_at)}</b></div><span class="chip ${a.passed ? 'green' : 'red'}">${num(a.percentage)}%</span><span>›</span></a>`).join('')}</div>` : ''}`;
+  setApp(shell('browse', 'Test details', inner)); mountAds();
+}
+
+/* ---------------- Profile ---------------- */
+async function viewProfile(tok) {
+  setApp(shell('profile', 'My profile', spinner()));
+  const att = await myAttempts(); if (stale(tok)) return; const p = S.profile || {}; const c = byId(S.classes, p.class_id);
+  const inner = `<div class="grid g2"><div class="card"><div class="row" style="margin-bottom:10px"><div class="avatar">${esc(initials(p.full_name))}</div><div><h2 style="margin:0">${esc(p.full_name)}</h2><div class="small muted">${esc(p.email || (p.is_guest ? 'Guest account' : ''))}</div></div></div>
+    <form data-form="profile"><label class="f">Full name</label><input class="in" name="full_name" required maxlength="80" value="${esc(p.full_name)}">
+     <div class="form-grid"><div><label class="f">Board</label><select class="in" name="board"><option value="">—</option>${['Bihar Board', 'CBSE'].map(b => `<option ${p.board === b ? 'selected' : ''}>${b}</option>`).join('')}</select></div>
+     <div><label class="f">Class</label><select class="in" name="class_id" data-in="pf-class"><option value="">—</option>${classOptions(p.class_id)}</select></div></div>
+     <div id="pf-stream" class="${c?.has_streams ? '' : 'hidden'}"><label class="f">Stream</label><select class="in" name="stream_id"><option value="">—</option>${S.streams.map(s => `<option value="${s.id}" ${p.stream_id === s.id ? 'selected' : ''}>${esc(s.name)}</option>`).join('')}</select></div>
+     <button class="btn btn-primary" style="margin-top:14px" type="submit">Save profile</button></form></div>
+   <div class="stack">${p.is_guest ? `<div class="card" style="border-color:rgba(255,194,62,.4)"><h2>🎮 Guest account</h2><p class="muted small">Register to keep your progress safe.</p><button class="btn btn-primary" style="margin-top:10px" data-act="upgrade">Create my account</button></div>`
+      : `<div class="card"><h2>🔐 Change password</h2><form data-form="pw"><label class="f">New password (min 8)</label><input class="in" type="password" name="password" minlength="8" required autocomplete="new-password"><button class="btn btn-ghost" style="margin-top:12px" type="submit">Update password</button></form></div>`}
+    <div class="card"><h2>Account</h2><button class="btn btn-ghost" style="width:100%;margin-bottom:10px" data-act="install">📲 Install app</button>${S.isAdmin ? '<a class="btn btn-ghost" href="#/admin" style="margin-bottom:10px;width:100%">🛠️ Open admin panel</a>' : ''}<button class="btn btn-danger" style="width:100%" data-act="logout">Log out</button></div></div></div>
+   <div class="card" style="margin-top:14px"><h2>📜 Test history (${att.length})</h2>${att.map(histRow).join('') || '<div class="empty">No tests yet.</div>'}</div>`;
+  setApp(shell('profile', 'My profile', inner));
+}
+INPUTS['pf-class'] = el => { $('#pf-stream').classList.toggle('hidden', !byId(S.classes, el.value)?.has_streams); };
+FORMS.profile = async f => {
+  const b = $('button[type=submit]', f), d = fdata(f); busy(b, true, 'Saving…'); const c = byId(S.classes, d.class_id);
+  try {
+    const upd = { full_name: d.full_name.trim(), board: d.board || null, class_id: d.class_id || null, stream_id: c?.has_streams && d.stream_id ? d.stream_id : null };
+    const data = await q(S.sb.from('profiles').update(upd).eq('id', S.session.user.id).select().single()); S.profile = data; busy(b, false); toast('Profile saved', 'ok'); route();
+  } catch (e) { busy(b, false); toast(errMsg(e), 'error'); }
+};
+FORMS.pw = async f => {
+  const b = $('button[type=submit]', f); busy(b, true);
+  try { const { error } = await S.sb.auth.updateUser({ password: fdata(f).password }); if (error) throw error; f.reset(); toast('Password updated', 'ok'); } catch (e) { toast(errMsg(e), 'error'); }
+  busy(b, false);
+};
+
+/* =====================================================================
+   EXAM ENGINE  (correct answers are never sent to the browser)
+   ===================================================================== */
+let EX = null;
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+function mulberry(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function seededShuffle(arr, seed) { const r = mulberry(seed), a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1));[a[i], a[j]] = [a[j], a[i]]; } return a; }
+const hashStr = s => { let h = 0; for (const c of String(s)) h = (h * 31 + c.charCodeAt(0)) | 0; return h; };
+const LET = ['A', 'B', 'C', 'D'];
+const exLeft = () => Math.round((EX.endAt - (Date.now() + EX.offset)) / 1000);
+
+async function viewExam(testId, tok) {
+  setApp(spinner());
+  let d;
+  try { d = await rpc('start_attempt', { p_test_id: testId }); }
+  catch (e) { if (stale(tok)) return; toast(errMsg(e), 'error', 6000); location.hash = '#/test/' + testId; return; }
+  if (stale(tok)) return;
+  if (d.expired) { toast('Time was up – your attempt was submitted automatically.', 'warn', 6000); location.hash = '#/result/' + d.attempt_id; return; }
+  const at = d.attempt; let qs = d.questions;
+  if (d.test.shuffle_questions) qs = seededShuffle(qs, at.seed);
+  if (d.test.shuffle_options) qs = qs.map(x => ({ ...x, options: seededShuffle(x.options, at.seed ^ hashStr(x.id)) }));
+  const ans = new Map(); d.answers.forEach(a => ans.set(a.question_id, { o: a.selected_option_id, m: !!a.marked }));
+  const pk = 'quizy_pending_' + at.id, pend = store.get(pk, {});
+  Object.entries(pend).forEach(([qid, v]) => ans.set(qid, { o: v.o, m: v.m }));   // restore unsynced answers after refresh
+  EX = { id: at.id, test: d.test, qs, idx: 0, ans, visited: new Set(qs.length ? [qs[0].id] : []), endAt: new Date(at.started_at).getTime() + at.duration_seconds * 1000, offset: new Date(d.server_now).getTime() - Date.now(), pk, pend, ver: 0, submitting: false, flushing: false, total: at.duration_seconds };
+  buildExam(); document.body.classList.add('in-exam');
+  const tick = setInterval(exTick, 500), sync = setInterval(() => flushPending(), 12000), onl = () => flushPending(), key = exKeys, vis = exVis, ctx = e => e.preventDefault();
+  window.addEventListener('online', onl); document.addEventListener('keydown', key); document.addEventListener('visibilitychange', vis); document.addEventListener('contextmenu', ctx);
+  onLeave(() => { clearInterval(tick); clearInterval(sync); window.removeEventListener('online', onl); document.removeEventListener('keydown', key); document.removeEventListener('visibilitychange', vis); document.removeEventListener('contextmenu', ctx); document.body.classList.remove('in-exam'); EX = null; });
+  exTick(); flushPending();
+}
+function buildExam() { applyFont();
+  setApp(`<div class="exam"><div class="ehead"><div class="row" style="flex-wrap:nowrap;min-width:0;gap:8px">${mascot('happy', 44, 'ex-mascot')}<div style="min-width:0"><b style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(EX.test.title)}</b>
+   <div class="tiny muted"><span id="qno"></span> · <span class="sync" id="sync">✓ Saved</span> <span id="tabs" class="chip red hidden"></span></div></div></div>
+   <div class="row" style="flex-wrap:nowrap"><button class="icon-btn" style="width:36px;height:36px" data-act="sound" aria-label="Sound">${soundOn() ? '🔊' : '🔇'}</button><span class="timer" id="timer">--:--</span><button class="btn btn-primary btn-sm" data-act="ex-submit">Submit</button></div><div class="progress-top" style="flex-basis:100%"><i id="prog"></i></div></div>
+   <div class="ebody"><div class="card" id="qcard"></div><div class="palwrap card" id="pal"></div></div>
+   <div class="ebar"><button class="btn btn-ghost" data-act="ex-prev">← Prev</button><button class="btn btn-ghost" data-act="ex-mark" id="b-mark">🔖 Mark</button><button class="btn btn-ghost" data-act="ex-clear">Clear</button>
+   <button class="btn btn-ghost palbtn" data-act="ex-pal">🧭 Questions</button><button class="btn btn-primary" data-act="ex-next">Next →</button></div></div>`);
+  drawExam();
+}
+function drawExam() {
+  const q = EX.qs[EX.idx], a = EX.ans.get(q.id) || {}; EX.visited.add(q.id);
+  $('#qno').textContent = `Question ${EX.idx + 1} of ${EX.qs.length}`; const pr = $('#prog'); if (pr) pr.style.width = (exCounts().ans / EX.qs.length * 100) + '%';
+  $('#qcard').innerHTML = `<div class="row between" style="margin-bottom:10px"><div class="row"><span class="chip">Q${EX.idx + 1}</span>${a.m ? '<span class="chip purple">🔖 Marked</span>' : ''}</div><div class="xtools"><button class="btn btn-ghost btn-sm" data-act="ex-font" data-d="-1" aria-label="Smaller text">A−</button><button class="btn btn-ghost btn-sm" data-act="ex-font" data-d="1" aria-label="Larger text">A+</button><button class="btn btn-ghost btn-sm" data-act="ex-nextun">⏭ Unanswered</button><button class="btn btn-ghost btn-sm" data-act="ex-nextmk">🔖 Marked</button></div></div>
+   <div class="qtext">${esc(q.text)}</div>${safeUrl(q.image_url) ? `<img class="qimg" src="${esc(safeUrl(q.image_url))}" alt="Question image" loading="lazy">` : ''}
+   ${q.options.map((o, i) => `<button class="opt ${a.o === o.id ? 'sel' : ''}" data-act="ex-opt" data-o="${o.id}"><span class="l">${LET[i]}</span><span class="t">${esc(o.text)}</span></button>`).join('')}`;
+  const mk = $('#b-mark'); if (mk) mk.textContent = a.m ? '🔖 Unmark' : '🔖 Mark';
+  drawPalette();
+}
+function drawPalette() {
+  const cnt = exCounts();
+  $('#pal').innerHTML = `<h2 style="font-size:1rem">Question palette <button class="icon-btn palbtn" style="width:34px;height:34px" data-act="ex-pal">✕</button></h2>
+   <div class="pal">${EX.qs.map((q, i) => { const a = EX.ans.get(q.id) || {}; const c = a.m ? 'mrk' : a.o ? 'ans' : EX.visited.has(q.id) ? 'vis' : ''; return `<button class="${c} ${i === EX.idx ? 'cur' : ''}" data-act="ex-go" data-i="${i}" aria-label="Question ${i + 1}">${i + 1}</button>`; }).join('')}</div>
+   <div class="legend"><span><i style="background:rgba(39,224,163,.5)"></i>Answered ${cnt.ans}</span><span><i style="background:rgba(255,92,122,.5)"></i>Unanswered ${cnt.un}</span><span><i style="background:rgba(139,92,246,.6)"></i>Marked ${cnt.mk}</span><span><i style="background:rgba(120,150,255,.3)"></i>Not visited ${cnt.nv}</span></div>`;
+}
+function exCounts() {
+  let ans = 0, mk = 0, nv = 0, un = 0;
+  EX.qs.forEach(q => { const a = EX.ans.get(q.id) || {}; if (a.o) ans++; if (a.m) mk++; if (!EX.visited.has(q.id) && !a.o) nv++; });
+  un = EX.qs.length - ans; return { ans, mk, nv, un };
+}
+function exTick() {
+  if (!EX) return; const s = exLeft(), t = $('#timer'); if (t) { t.textContent = clock(s); t.classList.toggle('low', s <= 300); } if (s <= 60 && s > 0 && !EX.wow) { EX.wow = 1; setMood('ex-mascot', 'wow'); toast('⏰ Only 1 minute left!', 'warn'); }
+  if (s <= 0 && !EX.submitting) { toast("Time's up! Submitting your test…", 'warn'); finishExam(true); }
+}
+function exKeys(e) {
+  if (!EX || EX.submitting || e.target.matches('input,textarea,select') || $('#modal-root').innerHTML) return;
+  if (e.key === 'ArrowRight') ACT['ex-next'](); else if (e.key === 'ArrowLeft') ACT['ex-prev']();
+  else { const i = '1234'.indexOf(e.key) >= 0 ? +e.key - 1 : 'abcd'.indexOf(e.key.toLowerCase()); const o = EX.qs[EX.idx].options[i]; if (i >= 0 && o) setAns(EX.qs[EX.idx].id, o.id); }
+}
+function setAns(qid, o, m) {
+  const cur = EX.ans.get(qid) || {}; const nv = { o: o === undefined ? cur.o || null : o, m: m === undefined ? !!cur.m : m };
+  EX.ans.set(qid, nv); EX.pend[qid] = { o: nv.o, m: nv.m, v: ++EX.ver }; store.set(EX.pk, EX.pend);
+  setSync(false); drawExam(); if (nv.o && nv.o !== cur.o) { sfx('tick'); mascotSay('cheer', 1000); } else if (nv.m && !cur.m) { sfx('mark'); mascotSay('think', 1200); } clearTimeout(EX.ft); EX.ft = setTimeout(flushPending, 350);
+}
+function setSync(ok) { const s = $('#sync'); if (!s) return; s.className = 'sync' + (ok ? '' : ' off'); s.textContent = ok ? '✓ Saved' : (navigator.onLine ? '⟳ Saving…' : '⚠ Offline – saved on device'); }
+async function flushPending() {
+  if (!EX || EX.flushing) return !!EX && !Object.keys(EX.pend).length; const ex = EX; ex.flushing = true; let ok = true;
+  try {
+    for (const [qid, v] of Object.entries({ ...ex.pend })) {
+      try { await rpc('save_answer', { p_attempt: ex.id, p_question: qid, p_option: v.o, p_marked: !!v.m }); if (ex.pend[qid] && ex.pend[qid].v === v.v) delete ex.pend[qid]; }
+      catch (e) { ok = false; if (/Time is over|already submitted/i.test(errMsg(e))) { delete ex.pend[qid]; } break; }
+    }
+  } finally { ex.flushing = false; }
+  store.set(ex.pk, ex.pend); if (EX === ex) setSync(!Object.keys(ex.pend).length); return ok && !Object.keys(ex.pend).length;
+}
+ACT['ex-opt'] = el => { if (!EX || EX.submitting) return; const q = EX.qs[EX.idx]; const cur = EX.ans.get(q.id) || {}; setAns(q.id, cur.o === el.dataset.o ? null : el.dataset.o); };
+ACT['ex-prev'] = () => { if (EX && EX.idx > 0) { EX.idx--; drawExam(); } };
+ACT['ex-next'] = () => { if (EX && EX.idx < EX.qs.length - 1) { EX.idx++; drawExam(); window.scrollTo(0, 0); } };
+ACT['ex-go'] = el => { EX.idx = +el.dataset.i; $('#pal').classList.remove('open'); drawExam(); window.scrollTo(0, 0); };
+ACT['ex-pal'] = () => $('#pal').classList.toggle('open');
+ACT['ex-mark'] = () => { const q = EX.qs[EX.idx]; setAns(q.id, undefined, !(EX.ans.get(q.id) || {}).m); };
+ACT['ex-clear'] = () => { const q = EX.qs[EX.idx]; setAns(q.id, null, undefined); toast('Response cleared', 'info', 1200); };
+ACT['ex-submit'] = () => {
+  if (!EX || EX.submitting) return; const c = exCounts();
+  const m = modal(`<h2>Submit test?</h2><div class="grid g3" style="margin:14px 0"><div class="tile"><div class="k">Answered</div><div class="v" style="color:var(--green)">${c.ans}</div></div><div class="tile"><div class="k">Unanswered</div><div class="v" style="color:var(--red)">${c.un}</div></div><div class="tile"><div class="k">Marked</div><div class="v" style="color:#b79cff">${c.mk}</div></div></div>
+   <p class="muted small">Time left: <b>${clock(exLeft())}</b>.${EX.tabs ? ' Screen left ' + EX.tabs + '×.' : ''} You cannot change answers after submitting.</p><div class="row" style="justify-content:flex-end;margin-top:16px"><button class="btn btn-ghost" data-act="modal-close">Keep working</button><button class="btn btn-success" data-act="ex-submit-yes">Yes, submit</button></div>`, { small: true });
+};
+ACT['ex-submit-yes'] = () => finishExam(false);
+async function finishExam(auto) {
+  if (!EX || EX.submitting) return; const ex = EX; ex.submitting = true;
+  modal(`<div class="center"><div class="spin" style="margin:10px auto"></div><h2 style="justify-content:center">Submitting…</h2><p class="muted small" id="sub-msg">Saving your answers and calculating results.</p></div>`, { small: true });
+  for (let w = 0; ex.flushing && w < 100; w++) await sleep(100);
+  const ok = await flushPending();
+  if (!ok && !auto) { ex.submitting = false; closeModal(); toast('Could not save all answers. Check your internet connection and try again.', 'error', 6000); return; }
+  for (let i = 0; ; i++) {
+    try { await rpc('submit_attempt', { p_attempt: ex.id }); break; }
+    catch (e) {
+      if (!auto && i >= 2) { ex.submitting = false; closeModal(); toast(errMsg(e), 'error', 6000); return; }
+      const m = $('#sub-msg'); if (m) m.textContent = 'Waiting for connection… we will keep retrying.'; await sleep(3500);
+    }
+  }
+  store.del(ex.pk); closeModal(); location.hash = '#/result/' + ex.id;
+}
+
+/* =====================================================================
+   RESULT SCREEN
+   ===================================================================== */
+let RES = null;
+const BADGES = r => {
+  const a = r.attempt, t = r.test, n = t.question_count || 1, att = a.correct_count + a.incorrect_count, acc = att ? a.correct_count / att * 100 : 0, pct = Number(a.percentage);
+  return [
+    ['🥇', 'Perfect Score', 'Scored 100%', pct >= 100], ['🎯', 'Sharp Shooter', 'Accuracy 90%+', att >= 3 && acc >= 90], ['⚡', 'Speed Racer', 'Passed using under half the time', a.passed && a.time_taken_seconds <= a.duration_seconds / 2],
+    ['✅', 'Test Passed', `Reached ${num(t.pass_percentage, 0)}%`, !!a.passed], ['📈', 'New Personal Best', 'Beat your previous score on this test', r.previous_best_same_test != null && pct > Number(r.previous_best_same_test)],
+    ['🚀', 'First Steps', 'Completed your first test', !!r.first_attempt], ['🧠', 'Full Attempt', 'Answered every question', att >= n], ['🏆', 'Top 3', 'Ranked in the top three', r.rank != null && r.rank <= 3]];
+};
+function suggestionsFor(r) {
+  const a = r.attempt, t = r.test, n = t.question_count || 1, att = a.correct_count + a.incorrect_count, acc = att ? a.correct_count / att * 100 : 0, rate = att / n * 100, used = a.time_taken_seconds / a.duration_seconds, out = [];
+  if (a.percentage >= 90) out.push('Outstanding! Challenge yourself with a harder test or a different subject to stay sharp.');
+  if (rate < 80) out.push(`You left ${a.unattempted_count} question(s) unattempted. Practise a first pass where you answer everything you know, then return to the tough ones.`);
+  if (acc < 60 && att) out.push('Accuracy is below 60%. Re-read the explanations for every wrong answer and revise those concepts before your next attempt.');
+  if (t.negative_marks > 0 && a.incorrect_count > a.correct_count / 2) out.push('Negative marking cost you marks – skip questions you are truly unsure about.');
+  if (used > .95 && a.unattempted_count > 0) out.push('You used almost all the time. Spend no more than about ' + fmtDur(a.duration_seconds / n) + ' per question and mark hard ones for review.');
+  if (used < .4 && acc < 75) out.push('You finished quickly but missed several answers. Use spare time to re-read questions and double-check.');
+  const weak = (r.subject_stats || []).filter(s => s.avg < 50).slice(-1)[0]; if (weak) out.push(`Your weakest subject so far is ${weak.subject} (${num(weak.avg)}% average). Schedule extra practice there.`);
+  if (!out.length) out.push('Good work! Keep practising regularly – consistency builds exam confidence.');
+  return out;
+}
+async function viewResult(id, tok) {
+  setApp(shell('browse', 'Result', spinner()));
+  const r = await rpc('get_result', { p_attempt: id }); if (stale(tok)) return; RES = r;
+  const a = r.attempt, t = r.test, pct = Number(a.percentage), att = a.correct_count + a.incorrect_count, acc = att ? a.correct_count / att * 100 : 0, rate = t.question_count ? att / t.question_count * 100 : 0;
+  const best = Math.max(pct, Number(r.previous_best_same_test || 0)), newBest = r.previous_best_same_test != null && pct > Number(r.previous_best_same_test), used = a.time_taken_seconds / a.duration_seconds * 100;
+  const pace = used < 40 ? 'Very fast' : used < 75 ? 'Balanced' : used < 95 ? 'Used most of the time' : 'Used all the time';
+  const bad = BADGES(r);
+  const inner = `<div class="rhero"><div style="display:flex;justify-content:center">${mascot(a.passed ? 'cheer' : 'sad', 100)}</div><div class="bubble c" style="display:inline-block;margin:6px 0 10px">${a.passed ? 'Awesome work! You nailed it 🎉' : "Don't worry – every mistake is a lesson. Check the explanations and try again! 💪"}</div><div class="muted small">${esc(t.subject)} · ${esc(t.class)}${t.stream ? ' · ' + esc(t.stream) : ''}</div><h1 style="font-size:1.25rem;margin:4px 0 14px">${esc(t.title)}</h1>
+    <div class="score"><span data-count="${a.score}" data-dec="${Number.isInteger(+a.score) ? 0 : 1}">0</span><span style="font-size:1.4rem"> / ${num(a.total_marks)}</span></div>
+    <div class="muted small" style="margin:6px 0 12px">Marks obtained</div><div class="row" style="justify-content:center"><span class="chip ${a.passed ? 'green' : 'red'}" style="font-size:.9rem">${a.passed ? '✅ PASSED' : '❌ NOT PASSED'}</span><span class="chip">${num(pct)}%</span>${r.rank ? `<span class="chip amber">🏆 Rank ${r.rank} of ${r.participants}</span>` : ''}${newBest ? '<span class="chip purple">📈 New personal best</span>' : ''}</div></div>
+  ${adHTML('post_submit')}
+  <div class="grid g3" style="margin:14px 0"><div class="card center t3d">${ringSVG(pct, { label: num(pct) + '%', color: a.passed ? '#27e0a3' : '#ff5c7a' })}<div class="small muted">Percentage</div></div>
+   <div class="card center t3d">${ringSVG(acc, { label: num(acc, 0) + '%', color: '#3ea6ff' })}<div class="small muted">Accuracy</div></div>
+   <div class="card center t3d">${ringSVG(rate, { label: num(rate, 0) + '%', color: '#8b5cf6' })}<div class="small muted">Attempted</div></div></div>
+  <div class="grid g4"><div class="tile"><span class="e">✅</span><div class="k">Correct</div><div class="v" style="color:var(--green)" data-count="${a.correct_count}">0</div></div><div class="tile"><span class="e">❌</span><div class="k">Incorrect</div><div class="v" style="color:var(--red)" data-count="${a.incorrect_count}">0</div></div>
+   <div class="tile"><span class="e">➖</span><div class="k">Unattempted</div><div class="v" style="color:var(--amber)" data-count="${a.unattempted_count}">0</div></div><div class="tile"><span class="e">⏱</span><div class="k">Time taken</div><div class="v" style="font-size:1.4rem">${fmtDur(a.time_taken_seconds)}</div></div></div>
+  <div class="grid g2" style="margin-top:14px"><div class="card"><h2>Correct vs incorrect</h2><div class="row" style="justify-content:space-around">${donutSVG([{ v: a.correct_count, color: '#27e0a3' }, { v: a.incorrect_count, color: '#ff5c7a' }, { v: a.unattempted_count, color: '#ffc23e' }])}
+     <div class="small stack"><div><i class="chip green">${a.correct_count}</i> Correct</div><div><i class="chip red">${a.incorrect_count}</i> Incorrect</div><div><i class="chip amber">${a.unattempted_count}</i> Unattempted</div></div></div></div>
+   <div class="card"><h2>⏳ Time management</h2><div class="bar ${used > 95 ? 'r' : 'g'}"><i data-w="${Math.min(100, used)}"></i></div><div class="small muted" style="margin:8px 0">Used ${fmtDur(a.time_taken_seconds)} of ${fmtDur(a.duration_seconds)} (${num(used, 0)}%) – <b style="color:var(--text)">${pace}</b></div>
+     <div class="small muted">Average per question: <b style="color:var(--text)">${fmtDur(a.time_taken_seconds / (t.question_count || 1))}</b> · Allowed: ${fmtDur(a.duration_seconds / (t.question_count || 1))}</div></div>
+   <div class="card"><h2>📈 Performance graph</h2>${lineSVG((r.history || []).map(h => ({ v: Number(h.percentage), t: h.title })))}<div class="small muted">Your last ${(r.history || []).length} test(s)</div></div>
+   <div class="card"><h2>📚 Subject performance</h2>${hbars((r.subject_stats || []).map(s => ({ name: s.subject, n: Number(s.avg) })), { suffix: '%', max: 100, cls: 'g' })}</div></div>
+  <div class="card" style="margin-top:14px"><h2>🏅 Achievements <span class="small muted">Personal best on this test: ${num(best)}%</span></h2><div class="grid g4">${bad.map(b => `<div class="badge3d ${b[3] ? '' : 'locked'}"><div class="b">${b[0]}</div><b class="small">${b[1]}</b><span class="tiny muted">${b[2]}</span></div>`).join('')}</div></div>
+  <div class="card" style="margin-top:14px"><h2>💡 How to improve</h2><ul style="padding-left:20px;line-height:1.7" class="muted">${suggestionsFor(r).map(s => `<li>${esc(s)}</li>`).join('')}</ul></div>
+  <div class="row" style="margin:16px 0"><button class="btn btn-primary" data-act="res-pdf">📄 Download PDF</button><button class="btn btn-ghost" data-act="res-share">📤 Share</button>${a.passed ? '<button class="btn btn-ghost" data-act="res-cert">🎓 Certificate</button>' : ''}${a.incorrect_count ? '<a class="btn btn-ghost" href="#/revise">📓 Revise mistakes</a>' : ''}<a class="btn btn-ghost" href="#/test/${t.id}">🔁 Test page</a><a class="btn btn-ghost" href="#/">Home</a></div>
+  <div class="card"><h2>Answer analysis</h2><div class="tabs" id="rtabs"><button class="on" data-act="rtab" data-t="correct">✅ Correct (${a.correct_count})</button><button data-act="rtab" data-t="incorrect">❌ Incorrect (${a.incorrect_count})</button><button data-act="rtab" data-t="un">➖ Unattempted (${a.unattempted_count})</button></div>
+   ${!r.explanations_visible ? `<p class="small muted" style="margin-bottom:10px">ℹ️ ${t.explanation_mode === 'after_end' && t.end_at ? 'Explanations will be available after ' + fmtDT(t.end_at) + '.' : 'Explanations are not shown for this test.'}</p>` : ''}<div id="rlist"></div></div>`;
+  setApp(shell('browse', 'Result', inner)); mountAds(); rtab('correct'); animateIn(); if (a.passed) { confetti(); sfx('win'); } else sfx('lose');
+}
+function qaCard(q, i) {
+  const sel = q.selected_option_id; const m = Number(q.marks_awarded);
+  return `<div class="qa"><div class="row between"><b>Q${i + 1}</b><span class="chip ${m > 0 ? 'green' : m < 0 ? 'red' : 'amber'}">${m > 0 ? '+' : ''}${num(m, 2)} marks</span></div><div style="white-space:pre-wrap;margin:6px 0">${esc(q.text)}</div>${safeUrl(q.image_url) ? `<img class="qimg" src="${esc(safeUrl(q.image_url))}" alt="Question image" loading="lazy">` : ''}
+   ${q.options.map((o, k) => { const ok = o.id === q.correct_option_id, mine = o.id === sel; return `<div class="o ${ok ? 'ok' : mine ? 'bad' : ''}"><b>${LET[k]}.</b><span style="flex:1;white-space:pre-wrap">${esc(o.text)}</span>${ok ? '<span class="chip green">Correct answer</span>' : ''}${mine ? `<span class="chip ${ok ? 'green' : 'red'}">Your answer</span>` : ''}</div>`; }).join('')}
+   ${!sel ? '<div class="small muted" style="margin-top:6px">You did not answer this question.</div>' : ''}${q.explanation ? `<div class="expl"><b>Explanation:</b> ${esc(q.explanation)}</div>` : ''}</div>`;
+}
+function rtab(t) {
+  const list = RES.questions.map((q, i) => ({ q, i })).filter(({ q }) => t === 'correct' ? q.is_correct : t === 'incorrect' ? (q.selected_option_id && !q.is_correct) : !q.selected_option_id);
+  $('#rlist').innerHTML = list.map(({ q, i }) => qaCard(q, i)).join('') || `<div class="empty">${t === 'correct' ? 'No correct answers in this attempt.' : t === 'incorrect' ? '🎉 No incorrect answers!' : '🎉 You attempted every question!'}</div>`;
+}
+ACT.rtab = el => { $$('#rtabs button').forEach(b => b.classList.toggle('on', b === el)); rtab(el.dataset.t); };
+
+/* ---------------- Result PDF (optional admin-controlled ad shown first) ---------------- */
+ACT['res-pdf'] = () => {
+  if (!RES) return;
+  if (!adConfig('pre_pdf')) return makePDF();
+  modal(`<div class="mhead"><h2>📄 Your PDF is ready</h2><button class="icon-btn" data-act="modal-close">✕</button></div><p class="muted small">Thanks for using ${esc(appName())}. Your download is not blocked by the advertisement below.</p>
+    ${adHTML('pre_pdf')}<div class="row" style="justify-content:flex-end"><button class="btn btn-primary" data-act="pdf-go">⬇ Download PDF</button></div>`, { small: true });
+  mountAds($('#modal-root'));
+};
+ACT['pdf-go'] = () => { closeModal(); makePDF(); };
+function makePDF() {
+  const lib = window.jspdf && window.jspdf.jsPDF; if (!lib) return toast('PDF library could not load. Check your connection and try again.', 'error');
+  const r = RES, a = r.attempt, t = r.test, doc = new lib({ unit: 'mm', format: 'a4' });
+  const T = s => String(s ?? '').replace(/[^\x20-\x7E -ÿ]/g, '').trim() || '-';
+  doc.setFillColor(18, 24, 66); doc.rect(0, 0, 210, 42, 'F'); doc.setFillColor(124, 92, 255); doc.rect(0, 40, 210, 2.5, 'F');
+  doc.setTextColor(255); doc.setFont('helvetica', 'bold'); doc.setFontSize(26); doc.text(T(appName()).toUpperCase(), 14, 20);
+  doc.setFontSize(11); doc.setFont('helvetica', 'normal'); doc.text('Test Result Report', 14, 29); doc.text('Created by ' + CREATOR, 14, 35);
+  doc.setTextColor(30); let y = 56;
+  const kv = (k, v) => { doc.setFont('helvetica', 'bold'); doc.setFontSize(10.5); doc.text(k, 14, y); doc.setFont('helvetica', 'normal'); doc.text(doc.splitTextToSize(T(v), 120), 62, y); y += 8; };
+  kv('Student', r.student.name); kv('Class / Stream', t.class + (t.stream ? ' - ' + t.stream : '')); kv('Subject', t.subject); kv('Test', t.title); kv('Date', new Date(a.submitted_at).toLocaleString());
+  y += 4; doc.setFillColor(238, 242, 255); doc.roundedRect(14, y, 182, 34, 4, 4, 'F');
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(26); doc.setTextColor(60, 70, 160); doc.text(`${num(a.score, 2)} / ${num(a.total_marks, 2)}`, 22, y + 18);
+  doc.setFontSize(12); doc.setTextColor(30); doc.text(`Percentage: ${num(a.percentage, 2)}%`, 22, y + 28);
+  doc.setFontSize(16); a.passed ? doc.setTextColor(18, 150, 110) : doc.setTextColor(210, 50, 90); doc.text(a.passed ? 'PASSED' : 'NOT PASSED', 150, y + 20); doc.setTextColor(30); y += 46;
+  const att = a.correct_count + a.incorrect_count, acc = att ? a.correct_count / att * 100 : 0;
+  [['Correct answers', a.correct_count], ['Incorrect answers', a.incorrect_count], ['Unattempted questions', a.unattempted_count], ['Accuracy', num(acc, 1) + '%'], ['Time taken', fmtDur(a.time_taken_seconds) + ' of ' + fmtDur(a.duration_seconds)], ['Pass mark', num(t.pass_percentage, 0) + '%'], ...(r.rank ? [['Rank', `${r.rank} of ${r.participants}`]] : [])].forEach(x => kv(x[0], x[1]));
+  y += 4; const total = Math.max(1, t.question_count), W = 182; let x = 14;
+  [[a.correct_count, [39, 224, 163]], [a.incorrect_count, [255, 92, 122]], [a.unattempted_count, [255, 194, 62]]].forEach(([n, c]) => { const w = n / total * W; if (w > 0) { doc.setFillColor(...c); doc.rect(x, y, w, 7, 'F'); x += w; } });
+  doc.setFontSize(8.5); doc.setTextColor(90); doc.text('Green = correct   Red = incorrect   Amber = unattempted', 14, y + 13); y += 24; doc.setTextColor(30);
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(12); doc.text('Performance summary', 14, y); y += 7; doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
+  suggestionsFor(r).slice(0, 3).forEach(s => { const lines = doc.splitTextToSize('- ' + T(s), 180); doc.text(lines, 14, y); y += lines.length * 5 + 2; });
+  doc.setFontSize(8.5); doc.setTextColor(120); doc.text(`Generated by ${T(appName())} on ${new Date().toLocaleDateString()} - Practice results, not an official board mark sheet.`, 14, 287);
+  doc.save('QuizHub-Result-' + T(t.title).replace(/[^A-Za-z0-9]+/g, '-').slice(0, 40) + '.pdf'); toast('PDF downloaded', 'ok');
+}
+
+/* =====================================================================
+   ADMIN PANEL  (all permissions are enforced server-side by RLS + RPC)
+   ===================================================================== */
+const AD = { subjects: [], chapters: [] };
+const ATABS = [['dashboard', '📊 Dashboard'], ['tests', '📝 Tests'], ['subjects', '📚 Subjects'], ['students', '👥 Students'], ['announcements', '📢 Announcements'], ['ads', '💰 Ads'], ['site', '⚙️ Website']];
+const safe = fn => async (...a) => { try { return await fn(...a); } catch (e) { toast(errMsg(e), 'error', 6000); } };
+const adminPage = (tab, html) => setApp(shell('admin', 'Admin panel', `<div class="atabs">${ATABS.map(t => `<a class="${t[0] === tab ? 'on' : ''}" href="#/admin/${t[0]}">${t[1]}</a>`).join('')}</div>${html}`));
+const adRefs = async () => { [AD.subjects, AD.chapters] = await Promise.all([q(S.sb.from('subjects').select('*').order('sort_order')), q(S.sb.from('chapters').select('*').order('sort_order'))]); };
+const refreshCatalog = () => loadCatalog().catch(() => { });
+function download(name, text, mime = 'text/plain') { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: mime })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
+async function uploadMedia(file, folder) {
+  if (!file) throw new Error('No file chosen');
+  if (!/^image\/(png|jpe?g|webp|gif)$/.test(file.type)) throw new Error('Please choose a PNG, JPG, WEBP or GIF image');
+  if (file.size > 2 * 1024 * 1024) throw new Error('Image must be smaller than 2 MB');
+  const ext = file.type.split('/')[1].replace('jpeg', 'jpg'), path = `${folder}/${uuid()}.${ext}`;
+  const { error } = await S.sb.storage.from('quizy-media').upload(path, file, { contentType: file.type, cacheControl: '3600' }); if (error) throw error;
+  return S.sb.storage.from('quizy-media').getPublicUrl(path).data.publicUrl;
+}
+function barsSVG(rows) {
+  if (!rows.length) return `<div class="empty">No data</div>`; const W = 340, H = 150, m = Math.max(...rows.map(r => r.n), 1), bw = (W - 10) / rows.length;
+  return `<svg class="svgc" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Bar chart">${rows.map((r, i) => { const h = r.n / m * (H - 40); return `<rect x="${5 + i * bw + 2}" y="${H - 22 - h}" width="${Math.max(3, bw - 4)}" height="${Math.max(1, h)}" rx="3" fill="url(#lg2)"><title>${esc(r.d)}: ${r.n}</title></rect>${rows.length <= 8 || i % 2 === 0 ? `<text x="${5 + i * bw + bw / 2}" y="${H - 8}" text-anchor="middle" font-size="8">${esc(r.d)}</text>` : ''}${r.n ? `<text x="${5 + i * bw + bw / 2}" y="${H - 26 - h}" text-anchor="middle" font-size="8" style="fill:var(--text)">${r.n}</text>` : ''}`; }).join('')}
+   <defs><linearGradient id="lg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3ea6ff"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>`;
+}
+async function viewAdmin(parts, tok) {
+  if (!S.isAdmin) { toast('Admin access only', 'error'); location.hash = '#/'; return; }
+  adminPage(parts[0] || 'dashboard', spinner()); await adRefs(); if (stale(tok)) return;
+  const tab = parts[0] || 'dashboard';
+  if (tab === 'tests' && parts[1] && parts[2] === 'questions') return adQuestions(parts[1], tok);
+  const fn = { dashboard: adDash, tests: adTests, subjects: adSubjects, students: adStudents, announcements: adAnn, ads: adAds, site: adSite }[tab] || adDash; return fn(tok);
+}
+
+/* ---------------- Dashboard / analytics ---------------- */
+async function adDash(tok) {
+  const a = await rpc('admin_analytics'); if (stale(tok)) return;
+  const tile = (e, k, v) => `<div class="tile"><span class="e">${e}</span><div class="k">${k}</div><div class="v" data-count="${v}">0</div></div>`;
+  adminPage('dashboard', `<div class="grid g3">${tile('👀', 'Total visits', a.total_visits)}${tile('🧑', 'Unique visitors', a.unique_visitors)}${tile('📅', 'Visitors today', a.today_visitors)}${tile('🎓', 'Registered students', a.registered)}${tile('🎮', 'Guest users', a.guests)}${tile('📝', 'Tests attempted', a.attempts)}</div>
+   <p class="small muted" style="margin:8px 0">Visitors are counted once per device per day, only for people who accepted cookies. Guest attempts: <b>${a.guest_attempts}</b>.</p>
+   <div class="grid g2"><div class="card"><h2>Daily visitors (14 days)</h2>${barsSVG(a.daily)}</div><div class="card"><h2>Monthly visitors</h2>${barsSVG(a.monthly)}</div>
+   <div class="card"><h2>Most popular subjects</h2>${hbars(a.popular_subjects)}</div><div class="card"><h2>Most attempted tests</h2>${hbars(a.popular_tests)}</div></div>`); animateIn();
+}
+
+/* ---------------- Tests ---------------- */
+let adTestsCache = [], adStats = {}, adFilter = 'all', adTerm = '';
+async function adTests(tok) {
+  const [tests, stats] = await Promise.all([q(S.sb.from('tests').select('*').order('created_at', { ascending: false })), rpc('admin_test_stats').catch(() => [])]); if (stale(tok)) return;
+  adTestsCache = tests; adStats = {}; (stats || []).forEach(x => adStats[x.test_id] = x);
+  const pub = tests.filter(t => t.is_published).length, att = (stats || []).reduce((n, x) => n + x.attempts, 0), tl = (e, k, v) => `<div class="tile"><span class="e">${e}</span><div class="k">${k}</div><div class="v" data-count="${v}">0</div></div>`;
+  adminPage('tests', `<div class="grid g4" style="margin-bottom:14px">${tl('📝', 'Total tests', tests.length)}${tl('✅', 'Published', pub)}${tl('✏️', 'Drafts', tests.length - pub)}${tl('🎯', 'Attempts', att)}</div>
+   <div class="row between" style="margin-bottom:12px"><div class="row" style="flex:1"><input class="in" style="max-width:300px" placeholder="🔎 Search tests…" data-in="adq"><select class="in" style="width:auto" data-in="adf"><option value="all">All</option><option value="pub">Published</option><option value="draft">Drafts</option></select></div><button class="btn btn-primary" data-act="test-new">＋ New test</button></div><div class="card" id="adtests"></div>`); drawAdTests(); animateIn();
+}
+function drawAdTests() {
+  const l = adTestsCache.filter(t => (adFilter === 'all' || (adFilter === 'pub') === t.is_published) && (!adTerm || t.title.toLowerCase().includes(adTerm.toLowerCase()))); const box = $('#adtests'); if (!box) return;
+  box.innerHTML = l.map(t => { const st = adStats[t.id]; return `<div class="list-item" style="flex-wrap:wrap"><div style="flex:1;min-width:200px"><b>${esc(t.title)}</b><div class="small muted">${esc(clsName(t.class_id))}${t.stream_id ? ' · ' + esc(strName(t.stream_id)) : ''} · ${esc(byId(AD.subjects, t.subject_id)?.name || '')} · ${t.question_count} Qs · ${t.duration_minutes}m</div>
+    <div class="row" style="margin-top:4px"><span class="chip ${t.is_published ? 'green' : 'amber'}">${t.is_published ? 'Published' : 'Draft'}</span><span class="chip">🎯 ${st ? st.attempts : 0} attempts</span>${st ? `<span class="chip purple">avg ${st.avg_pct}%</span><span class="chip green">${st.pass_rate}% pass</span>` : ''}${t.start_at ? `<span class="chip">Opens ${fmtDT(t.start_at)}</span>` : ''}${t.single_attempt ? '<span class="chip purple">Single attempt</span>' : ''}</div></div>
+    <div class="row"><a class="btn btn-ghost btn-sm" href="#/admin/tests/${t.id}/questions">❓ Questions</a><button class="btn btn-ghost btn-sm" data-act="test-res" data-id="${t.id}">📊 Results</button><button class="btn btn-ghost btn-sm" data-act="test-edit" data-id="${t.id}">✏️ Edit</button><button class="btn btn-ghost btn-sm" data-act="test-dup" data-id="${t.id}">📋 Copy</button>
+    <button class="btn btn-sm ${t.is_published ? 'btn-ghost' : 'btn-success'}" data-act="test-pub" data-id="${t.id}">${t.is_published ? 'Unpublish' : 'Publish'}</button><button class="btn btn-danger btn-sm" data-act="test-del" data-id="${t.id}">🗑</button></div></div>`; }).join('') || `<div class="empty">No tests found. Create your first test!</div>`;
+}
+INPUTS.adq = el => { adTerm = el.value; drawAdTests(); };
+INPUTS.adf = el => { adFilter = el.value; drawAdTests(); };
+ACT['test-new'] = () => testForm(null);
+ACT['test-edit'] = el => testForm(byId(adTestsCache, el.dataset.id));
+ACT['test-pub'] = safe(async el => {
+  const t = byId(adTestsCache, el.dataset.id); await q(S.sb.from('tests').update({ is_published: !t.is_published }).eq('id', t.id));
+  toast(t.is_published ? 'Test unpublished' : 'Test published', 'ok'); await refreshCatalog(); route();
+});
+ACT['test-del'] = safe(async el => {
+  const t = byId(adTestsCache, el.dataset.id);
+  if (!await confirmBox({ title: 'Delete this test?', message: `"${t.title}" and all its questions and student attempts will be permanently deleted.`, ok: 'Delete', danger: true })) return;
+  await q(S.sb.from('tests').delete().eq('id', t.id)); toast('Test deleted', 'ok'); await refreshCatalog(); route();
+});
+function testForm(t) {
+  t = t || { duration_minutes: 30, total_marks: 100, negative_marks: 0, pass_percentage: 40, ranking_enabled: true, explanation_mode: 'after_submit' };
+  const ck = (n, l) => `<label class="check"><input type="checkbox" name="${n}" ${t[n] ? 'checked' : ''}> ${l}</label>`;
+  modal(`<div class="mhead"><h2>${t.id ? 'Edit test' : 'Create test'}</h2><button class="icon-btn" data-act="modal-close">✕</button></div>
+  <form data-form="test" id="testform" data-id="${t.id || ''}" data-sc="${t.class_id || ''}" data-ss="${t.stream_id || ''}" data-sj="${t.subject_id || ''}" data-sh="${t.chapter_id || ''}">
+   <label class="f">Title</label><input class="in" name="title" required minlength="3" maxlength="160" value="${esc(t.title)}" placeholder="e.g. Quadratic Equations – Chapter Test">
+   <label class="f">Description</label><textarea class="in" name="description" maxlength="1000">${esc(t.description)}</textarea>
+   <div class="form-grid"><div><label class="f">Class</label><select class="in" name="class_id" data-in="tf-sel" required>${classOptions(t.class_id)}</select></div>
+    <div id="tf-stream-w"><label class="f">Stream</label><select class="in" name="stream_id" data-in="tf-sel">${S.streams.map(s => `<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div>
+    <div><label class="f">Subject</label><select class="in" name="subject_id" data-in="tf-sel" required></select></div><div><label class="f">Chapter (optional)</label><select class="in" name="chapter_id"></select></div></div>
+   <div class="form-grid"><div><label class="f">Duration (minutes)</label><input class="in" type="number" name="duration_minutes" min="1" max="360" required value="${t.duration_minutes}"></div>
+    <div><label class="f">Maximum marks</label><input class="in" type="number" name="total_marks" min="1" step="0.5" required value="${t.total_marks}"></div>
+    <div><label class="f">Negative marks per wrong answer</label><input class="in" type="number" name="negative_marks" min="0" step="0.05" required value="${t.negative_marks}"></div>
+    <div><label class="f">Passing percentage</label><input class="in" type="number" name="pass_percentage" min="0" max="100" required value="${t.pass_percentage}"></div>
+    <div><label class="f">Opens at (optional)</label><input class="in" type="datetime-local" name="start_at" value="${toLocalInput(t.start_at)}"></div><div><label class="f">Closes at (optional)</label><input class="in" type="datetime-local" name="end_at" value="${toLocalInput(t.end_at)}"></div></div>
+   <label class="f">Show explanations</label><select class="in" name="explanation_mode"><option value="after_submit" ${t.explanation_mode === 'after_submit' ? 'selected' : ''}>Immediately after submission</option><option value="after_end" ${t.explanation_mode === 'after_end' ? 'selected' : ''}>Only after the test closes</option><option value="never" ${t.explanation_mode === 'never' ? 'selected' : ''}>Never</option></select>
+   <div style="margin-top:8px">${ck('shuffle_questions', 'Randomize question order')}${ck('shuffle_options', 'Randomize option order')}${ck('single_attempt', 'Single attempt only')}${ck('ranking_enabled', 'Enable ranking')}</div>
+   <p class="tiny muted">Marks per question = maximum marks ÷ number of questions. Publish after adding questions.</p>
+   <div class="row" style="justify-content:flex-end;margin-top:12px"><button type="button" class="btn btn-ghost" data-act="modal-close">Cancel</button><button class="btn btn-primary" type="submit">${t.id ? 'Save changes' : 'Create & add questions'}</button></div></form>`);
+  tfRefresh(true);
+}
+function tfRefresh(init) {
+  const f = $('#testform'); if (!f) return; const cid = f.class_id.value, c = byId(S.classes, cid);
+  if (init) { f.stream_id.value = f.dataset.ss || S.streams[0]?.id; }
+  $('#tf-stream-w').classList.toggle('hidden', !c?.has_streams);
+  const sid = c?.has_streams ? f.stream_id.value : null; const subs = AD.subjects.filter(s => s.class_id === cid && (c?.has_streams ? s.stream_id === sid : !s.stream_id));
+  const keepS = init ? f.dataset.sj : f.subject_id.value; f.subject_id.innerHTML = subs.map(s => `<option value="${s.id}" ${s.id === keepS ? 'selected' : ''}>${esc(s.name)}</option>`).join('') || '<option value="">No subjects – add one first</option>';
+  const chs = AD.chapters.filter(ch => ch.subject_id === f.subject_id.value); const keepC = init ? f.dataset.sh : f.chapter_id.value;
+  f.chapter_id.innerHTML = `<option value="">— Whole subject —</option>` + chs.map(ch => `<option value="${ch.id}" ${ch.id === keepC ? 'selected' : ''}>${esc(ch.name)}</option>`).join('');
+}
+INPUTS['tf-sel'] = () => tfRefresh(false);
+FORMS.test = safe(async f => {
+  const b = $('button[type=submit]', f), d = fdata(f), c = byId(S.classes, d.class_id); if (!d.subject_id) return toast('Choose a subject (add one in the Subjects tab if empty)', 'warn');
+  const row = { title: d.title.trim(), description: d.description.trim() || null, class_id: d.class_id, stream_id: c?.has_streams ? d.stream_id : null, subject_id: d.subject_id, chapter_id: d.chapter_id || null,
+    duration_minutes: +d.duration_minutes, total_marks: +d.total_marks, negative_marks: +d.negative_marks, pass_percentage: +d.pass_percentage,
+    start_at: d.start_at ? new Date(d.start_at).toISOString() : null, end_at: d.end_at ? new Date(d.end_at).toISOString() : null, explanation_mode: d.explanation_mode,
+    shuffle_questions: !!d.shuffle_questions, shuffle_options: !!d.shuffle_options, single_attempt: !!d.single_attempt, ranking_enabled: !!d.ranking_enabled };
+  busy(b, true, 'Saving…');
+  try {
+    if (f.dataset.id) { await q(S.sb.from('tests').update(row).eq('id', f.dataset.id)); toast('Test updated', 'ok'); closeModal(); await refreshCatalog(); route(); }
+    else { row.created_by = S.session.user.id; const t = await q(S.sb.from('tests').insert(row).select().single()); toast('Test created – now add questions', 'ok'); closeModal(); location.hash = `#/admin/tests/${t.id}/questions`; }
+  } finally { busy(b, false); }
+});
+
+/* ---------------- Question manager ---------------- */
+const AQ = { test: null, qs: [] };
+async function adQuestions(testId, tok) {
+  const [test, qs] = await Promise.all([q(S.sb.from('tests').select('*').eq('id', testId).single()), rpc('admin_get_questions', { p_test: testId })]); if (stale(tok)) return;
+  AQ.test = test; AQ.qs = qs; drawQuestions();
+}
+function drawQuestions() {
+  const t = AQ.test, n = AQ.qs.length, bad = AQ.qs.filter(x => (x.options || []).length !== 4 || !x.correct_position).length;
+  adminPage('tests', `<div class="crumbs"><a href="#/admin/tests">← All tests</a></div>
+   <div class="card"><div class="row between"><div><h2 style="margin:0">${esc(t.title)}</h2><div class="small muted">${n}/100 questions · ${num(t.total_marks)} marks${n ? ` (${num(t.total_marks / n, 2)} per question)` : ''}</div></div><span class="chip ${t.is_published ? 'green' : 'amber'}">${t.is_published ? 'Published' : 'Draft'}</span></div>
+    ${bad ? `<p class="small" style="color:var(--red);margin-top:8px">⚠ ${bad} question(s) are incomplete.</p>` : ''}
+    <div class="row" style="margin-top:12px"><button class="btn btn-primary btn-sm" data-act="q-add" ${n >= 100 ? 'disabled' : ''}>＋ Add question</button><button class="btn btn-ghost btn-sm" data-act="q-bulk">⬆ Bulk upload (CSV/JSON)</button><button class="btn btn-ghost btn-sm" data-act="q-stats">📈 Question analysis</button>
+    <button class="btn btn-sm ${t.is_published ? 'btn-ghost' : 'btn-success'}" data-act="q-pub">${t.is_published ? 'Unpublish' : 'Publish test'}</button></div></div>
+   <div style="margin-top:14px">${AQ.qs.map((x, i) => `<div class="qa"><div class="row between"><b>Q${i + 1}</b><div class="row"><button class="btn btn-ghost btn-sm" data-act="q-edit" data-id="${x.id}">✏️ Edit</button><button class="btn btn-danger btn-sm" data-act="q-del" data-id="${x.id}">🗑</button></div></div>
+     <div style="margin:6px 0;white-space:pre-wrap">${esc(x.text)}</div>${safeUrl(x.image_url) ? `<img src="${esc(safeUrl(x.image_url))}" alt="" style="max-height:120px;border-radius:10px;background:#fff" loading="lazy">` : ''}
+     ${(x.options || []).map((o, k) => `<div class="o ${o.position === x.correct_position ? 'ok' : ''}"><b>${LET[k]}.</b><span>${esc(o.text)}</span>${o.position === x.correct_position ? '<span class="chip green">Correct</span>' : ''}</div>`).join('')}
+     ${x.explanation ? `<div class="expl">${esc(x.explanation)}</div>` : '<div class="tiny muted" style="margin-top:6px">No explanation added</div>'}</div>`).join('') || '<div class="empty card">No questions yet. Add one or bulk-upload a CSV/JSON file.</div>'}</div>`);
+}
+const reloadQs = async () => { AQ.qs = await rpc('admin_get_questions', { p_test: AQ.test.id }); AQ.test = await q(S.sb.from('tests').select('*').eq('id', AQ.test.id).single()); drawQuestions(); refreshCatalog(); };
+ACT['q-pub'] = safe(async () => { await q(S.sb.from('tests').update({ is_published: !AQ.test.is_published }).eq('id', AQ.test.id)); toast(AQ.test.is_published ? 'Test unpublished' : 'Test published', 'ok'); await reloadQs(); });
+ACT['q-add'] = () => qForm(null);
+ACT['q-edit'] = el => qForm(byId(AQ.qs, el.dataset.id));
+ACT['q-del'] = safe(async el => {
+  if (!await confirmBox({ title: 'Delete question?', message: 'This cannot be undone.', ok: 'Delete', danger: true })) return;
+  await q(S.sb.from('questions').delete().eq('id', el.dataset.id)); toast('Question deleted', 'ok'); await reloadQs();
+});
+function qForm(x) {
+  x = x || { options: [] }; const op = i => (x.options || []).find(o => o.position === i + 1)?.text || '';
+  modal(`<div class="mhead"><h2>${x.id ? 'Edit question' : 'Add question'}</h2><button class="icon-btn" data-act="modal-close">✕</button></div>
+  <form data-form="qsave" data-id="${x.id || ''}"><label class="f">Question</label><textarea class="in" name="question" required maxlength="2000">${esc(x.text)}</textarea>
+   <label class="f">Image (optional) – paste a URL or upload</label><div class="row" style="flex-wrap:nowrap"><input class="in" name="image_url" id="q-img-url" value="${esc(x.image_url)}" placeholder="https://…"><label class="btn btn-ghost btn-sm" style="cursor:pointer">Upload<input type="file" accept="image/*" hidden data-in="q-img"></label></div>
+   ${[0, 1, 2, 3].map(i => `<label class="f">Option ${LET[i]}</label><div class="row" style="flex-wrap:nowrap"><input type="radio" name="correct" value="${i + 1}" ${x.correct_position === i + 1 ? 'checked' : ''} required title="Mark as correct" style="width:20px;height:20px;accent-color:#27e0a3"><input class="in" name="o${i}" required maxlength="500" value="${esc(op(i))}"></div>`).join('')}
+   <p class="tiny muted">Select the radio button next to the correct option.</p><label class="f">Explanation (optional)</label><textarea class="in" name="explanation" maxlength="2000">${esc(x.explanation)}</textarea>
+   <div class="row" style="justify-content:flex-end;margin-top:12px"><button type="button" class="btn btn-ghost" data-act="modal-close">Cancel</button><button class="btn btn-primary" type="submit">Save question</button></div></form>`);
+}
+INPUTS['q-img'] = safe(async el => { const f = el.files[0]; if (!f) return; toast('Uploading…', 'info', 1500); const url = await uploadMedia(f, 'questions'); $('#q-img-url').value = url; toast('Image uploaded', 'ok'); });
+FORMS.qsave = safe(async f => {
+  const b = $('button[type=submit]', f), d = fdata(f); busy(b, true, 'Saving…');
+  try {
+    await rpc('admin_save_question', { p_test: AQ.test.id, p_id: f.dataset.id || null, p_question: { question: d.question, options: [d.o0, d.o1, d.o2, d.o3], correct: +d.correct, explanation: d.explanation, image_url: d.image_url } });
+    closeModal(); toast('Question saved', 'ok'); await reloadQs();
+  } finally { busy(b, false); }
+});
+
+/* ---------------- Bulk upload (CSV / JSON) ---------------- */
+const SAMPLE_CSV = `question,option_a,option_b,option_c,option_d,correct,explanation,image_url
+"What is the value of 2 + 2 × 3?","8","12","6","10",A,"Multiplication comes before addition: 2 × 3 = 6, then 2 + 6 = 8.",
+"Which gas do plants absorb for photosynthesis?","Oxygen","Carbon dioxide","Nitrogen","Hydrogen",B,"Plants take in carbon dioxide and release oxygen.",
+"Who wrote the national anthem of India?","Bankim Chandra Chatterjee","Rabindranath Tagore","Sarojini Naidu","Mahatma Gandhi",B,"Jana Gana Mana was written by Rabindranath Tagore.",
+`;
+const SAMPLE_JSON = JSON.stringify([{ question: 'What is the SI unit of force?', options: ['Joule', 'Newton', 'Watt', 'Pascal'], correct: 'B', explanation: 'Force is measured in newtons (N).', image_url: '' }], null, 2);
+function parseCSV(text) {
+  text = text.replace(/^﻿/, ''); const first = text.split(/\r?\n/)[0] || ''; const dl = first.includes(',') ? ',' : first.includes('\t') ? '\t' : first.includes(';') ? ';' : ','; const rows = []; let row = [], cur = '', inq = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inq) { if (c === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else inq = false; } else cur += c; }
+    else if (c === '"') inq = true; else if (c === dl) { row.push(cur); cur = ''; }
+    else if (c === '\n' || c === '\r') { if (c === '\r' && text[i + 1] === '\n') i++; row.push(cur); cur = ''; rows.push(row); row = []; } else cur += c;
+  }
+  if (cur !== '' || row.length) { row.push(cur); rows.push(row); } return rows.filter(r => r.some(x => x.trim() !== ''));
+}
+const hnorm = h => String(h).toLowerCase().replace(/[^a-z0-9]/g, '');
+function normQ(o) {
+  const g = (...ks) => { for (const k of ks) if (o[k] != null && String(o[k]).trim() !== '') return String(o[k]).trim(); return ''; };
+  const options = Array.isArray(o.options) ? o.options.map(x => String(x ?? '').trim()) : [g('optiona', 'a', 'option1', 'opta', 'opt1'), g('optionb', 'b', 'option2', 'optb', 'opt2'), g('optionc', 'c', 'option3', 'optc', 'opt3'), g('optiond', 'd', 'option4', 'optd', 'opt4')];
+  const c = g('correct', 'answer', 'correctanswer', 'correctoption', 'ans'); let idx = -1;
+  if (/^[A-Da-d]$/.test(c)) idx = 'ABCD'.indexOf(c.toUpperCase()); else if (/^[1-4]$/.test(c)) idx = +c - 1; else if (c) idx = options.findIndex(x => x.toLowerCase() === c.toLowerCase());
+  return { question: g('question', 'text', 'q', 'questiontext'), options, correct: idx >= 0 ? idx + 1 : null, explanation: g('explanation', 'explain', 'solution'), image_url: g('imageurl', 'image', 'img') };
+}
+function checkQ(x) {
+  if (!x.question) return 'Question text is empty'; if (x.question.length > 2000) return 'Question is longer than 2000 characters';
+  if (!Array.isArray(x.options) || x.options.length !== 4) return 'Exactly 4 options required';
+  for (let i = 0; i < 4; i++) { if (!x.options[i]) return `Option ${LET[i]} is empty`; if (x.options[i].length > 500) return `Option ${LET[i]} is too long`; }
+  if (!x.correct) return 'Correct answer must be A, B, C, D (or 1-4)'; if (x.image_url && !/^https?:\/\//i.test(x.image_url)) return 'Image URL must start with http(s)://'; return null;
+}
+function parseBulk(text, name) {
+  text = text.trim(); if (!text) throw new Error('Paste or choose a file first');
+  let items;
+  if (/\.json$/i.test(name || '') || /^[\[{]/.test(text)) {
+    let j; try { j = JSON.parse(text); } catch { throw new Error('Invalid JSON – check commas and quotes'); } if (!Array.isArray(j)) j = j.questions; if (!Array.isArray(j)) throw new Error('JSON must be a list of questions');
+    items = j.map(o => { const k = {}; Object.keys(o || {}).forEach(key => k[hnorm(key)] = o[key]); if (Array.isArray(o?.options)) k.options = o.options; return normQ(k); });
+  } else {
+    const rows = parseCSV(text); if (rows.length < 2) throw new Error('CSV needs a header row and at least one question'); const hd = rows[0].map(hnorm);
+    items = rows.slice(1).map(r => { const k = {}; hd.forEach((h, i) => k[h] = r[i]); return normQ(k); });
+  }
+  if (items.length > 100) throw new Error('A maximum of 100 questions can be uploaded in one operation (found ' + items.length + ')');
+  return items.map((x, i) => ({ row: i + 1, q: x, err: checkQ(x) }));
+}
+let BULK = null;
+ACT['q-bulk'] = () => {
+  BULK = null;
+  modal(`<div class="mhead"><h2>Bulk upload questions</h2><button class="icon-btn" data-act="modal-close">✕</button></div>
+   <p class="small muted">Up to 100 questions per upload. Columns: <code class="k">question, option_a, option_b, option_c, option_d, correct (A-D), explanation, image_url</code></p>
+   <div class="row" style="margin:8px 0"><button class="btn btn-ghost btn-sm" data-act="dl-csv">⬇ Sample CSV</button><button class="btn btn-ghost btn-sm" data-act="dl-json">⬇ Sample JSON</button><label class="btn btn-ghost btn-sm" style="cursor:pointer">📂 Choose file<input type="file" accept=".csv,.json,.txt" hidden data-in="bulk-file"></label></div>
+   <textarea class="in" id="bulk-text" style="min-height:130px;font-family:monospace;font-size:.8rem" placeholder="…or paste CSV / JSON here"></textarea>
+   <label class="check"><input type="checkbox" id="bulk-replace"> Replace existing questions in this test</label><div class="row"><button class="btn btn-primary btn-sm" data-act="bulk-validate">✔ Validate</button></div><div id="bulk-report" style="margin-top:12px"></div>`);
+};
+ACT['dl-csv'] = () => download('quizy-sample-questions.csv', SAMPLE_CSV, 'text/csv');
+ACT['dl-json'] = () => download('quizy-sample-questions.json', SAMPLE_JSON, 'application/json');
+INPUTS['bulk-file'] = safe(async el => { const f = el.files[0]; if (!f) return; $('#bulk-text').value = await f.text(); BULK = { name: f.name }; toast('File loaded – press Validate', 'info'); });
+ACT['bulk-validate'] = () => {
+  try {
+    const rep = parseBulk($('#bulk-text').value, BULK?.name); const ok = rep.filter(r => !r.err); BULK = { ...BULK, ok: ok.map(r => r.q), rep };
+    $('#bulk-report').innerHTML = `<div class="row"><span class="chip green">${ok.length} valid</span><span class="chip ${rep.length - ok.length ? 'red' : ''}">${rep.length - ok.length} with errors</span></div>
+     <div class="scroll-x" style="max-height:240px;overflow:auto;margin:8px 0"><table class="t"><tr><th>#</th><th>Question</th><th>Status</th></tr>${rep.map(r => `<tr><td>${r.row}</td><td>${esc(r.q.question.slice(0, 70))}</td><td>${r.err ? `<span style="color:var(--red)">✗ ${esc(r.err)}</span>` : '<span style="color:var(--green)">✓ OK</span>'}</td></tr>`).join('')}</table></div>
+     <button class="btn btn-success" data-act="bulk-import" ${ok.length ? '' : 'disabled'}>Import ${ok.length} valid question${ok.length === 1 ? '' : 's'}</button>`;
+  } catch (e) { $('#bulk-report').innerHTML = `<p style="color:var(--red)">${esc(errMsg(e))}</p>`; }
+};
+ACT['bulk-import'] = safe(async el => {
+  if (!BULK?.ok?.length) return; const replace = $('#bulk-replace').checked;
+  if (!replace && AQ.qs.length + BULK.ok.length > 100) return toast(`This test has ${AQ.qs.length} questions; only ${100 - AQ.qs.length} more can be added (max 100). Tick “Replace” or upload fewer.`, 'error', 7000);
+  busy(el, true, 'Importing…');
+  try {
+    const r = await rpc('admin_import_questions', { p_test: AQ.test.id, p_questions: BULK.ok, p_replace: replace });
+    const errs = r.errors || []; toast(`Imported ${r.inserted} question(s)${errs.length ? ` – ${errs.length} rejected by the server` : ''}. Test now has ${r.total}.`, errs.length ? 'warn' : 'ok', 6000);
+    if (errs.length) { $('#bulk-report').innerHTML = `<p style="color:var(--red)">Server rejected:</p><ul class="small">${errs.map(x => `<li>Row ${x.row}: ${esc(x.error)}</li>`).join('')}</ul><button class="btn btn-ghost btn-sm" data-act="modal-close">Close</button>`; } else closeModal();
+    await reloadQs();
+  } finally { busy(el, false); }
+});
+
+/* ---------------- Subjects & chapters ---------------- */
+async function adSubjects(tok) {
+  const groups = []; S.classes.forEach(c => { if (c.has_streams) S.streams.forEach(s => groups.push([c, s])); else groups.push([c, null]); });
+  adminPage('subjects', `<div class="row between" style="margin-bottom:12px"><p class="muted small" style="max-width:520px">Add, edit or remove subjects for each class and stream, and manage their chapters.</p><button class="btn btn-primary" data-act="sub-new">＋ Add subject</button></div>
+   ${groups.map(([c, s]) => { const subs = AD.subjects.filter(x => x.class_id === c.id && (s ? x.stream_id === s.id : !x.stream_id)); return `<div class="card" style="margin-bottom:12px"><h2>${esc(c.name)}${s ? ' · ' + esc(s.name) : ''}</h2>${subs.map(x => `<div class="list-item"><div class="rankno">${esc(x.icon)}</div><div style="flex:1"><b>${esc(x.name)}</b> ${x.is_active ? '' : '<span class="chip amber">Hidden</span>'}<div class="tiny muted">${AD.chapters.filter(ch => ch.subject_id === x.id).length} chapters</div></div>
+      <button class="btn btn-ghost btn-sm" data-act="chap-open" data-id="${x.id}">Chapters</button><button class="btn btn-ghost btn-sm" data-act="sub-edit" data-id="${x.id}">✏️</button><button class="btn btn-danger btn-sm" data-act="sub-del" data-id="${x.id}">🗑</button></div>`).join('') || '<div class="empty">No subjects</div>'}</div>`; }).join('')}`);
+}
+function subForm(x) {
+  x = x || { is_active: true, icon: '📘' };
+  modal(`<div class="mhead"><h2>${x.id ? 'Edit subject' : 'Add subject'}</h2><button class="icon-btn" data-act="modal-close">✕</button></div><form data-form="subject" data-id="${x.id || ''}">
+   <div class="form-grid"><div><label class="f">Class</label><select class="in" name="class_id" data-in="sub-cls">${classOptions(x.class_id)}</select></div>
+   <div id="sub-st-w"><label class="f">Stream</label><select class="in" name="stream_id">${S.streams.map(s => `<option value="${s.id}" ${x.stream_id === s.id ? 'selected' : ''}>${esc(s.name)}</option>`).join('')}</select></div></div>
+   <div class="form-grid"><div><label class="f">Subject name</label><input class="in" name="name" required maxlength="80" value="${esc(x.name)}"></div><div><label class="f">Icon (emoji)</label><input class="in" name="icon" maxlength="4" value="${esc(x.icon)}"></div></div>
+   <label class="check"><input type="checkbox" name="is_active" ${x.is_active ? 'checked' : ''}> Visible to students</label><div class="row" style="justify-content:flex-end;margin-top:10px"><button class="btn btn-primary" type="submit">Save subject</button></div></form>`, { small: true });
+  INPUTS['sub-cls']({ value: $('select[name=class_id]').value });
+}
+INPUTS['sub-cls'] = el => $('#sub-st-w').classList.toggle('hidden', !byId(S.classes, el.value)?.has_streams);
+ACT['sub-new'] = () => subForm(null); ACT['sub-edit'] = el => subForm(byId(AD.subjects, el.dataset.id));
+FORMS.subject = safe(async f => {
+  const d = fdata(f), c = byId(S.classes, d.class_id), row = { class_id: d.class_id, stream_id: c?.has_streams ? d.stream_id : null, name: d.name.trim(), icon: d.icon.trim() || '📘', is_active: !!d.is_active };
+  if (f.dataset.id) await q(S.sb.from('subjects').update(row).eq('id', f.dataset.id)); else await q(S.sb.from('subjects').insert(row));
+  toast('Subject saved', 'ok'); closeModal(); await refreshCatalog(); route();
+});
+ACT['sub-del'] = safe(async el => {
+  const s = byId(AD.subjects, el.dataset.id); if (!await confirmBox({ title: 'Delete subject?', message: `"${s.name}" and its chapters will be removed. Subjects that still have tests cannot be deleted – unpublish or delete those tests first.`, ok: 'Delete', danger: true })) return;
+  await q(S.sb.from('subjects').delete().eq('id', s.id)); toast('Subject deleted', 'ok'); await refreshCatalog(); route();
+});
+const chapModal = sid => {
+  const s = byId(AD.subjects, sid), chs = AD.chapters.filter(c => c.subject_id === sid);
+  modal(`<div class="mhead"><h2>${esc(s.icon)} ${esc(s.name)} – chapters</h2><button class="icon-btn" data-act="modal-close">✕</button></div>
+   ${chs.map(c => `<form class="row" data-form="chap-ren" data-id="${c.id}" data-sid="${sid}" style="flex-wrap:nowrap;margin-bottom:8px"><input class="in" name="name" value="${esc(c.name)}" required maxlength="120"><button class="btn btn-ghost btn-sm" type="submit">Save</button><button type="button" class="btn btn-danger btn-sm" data-act="chap-del" data-id="${c.id}" data-sid="${sid}">🗑</button></form>`).join('') || '<div class="empty">No chapters yet</div>'}
+   <form class="row" data-form="chap-add" data-sid="${sid}" style="flex-wrap:nowrap;margin-top:12px"><input class="in" name="name" placeholder="New chapter name" required maxlength="120"><button class="btn btn-primary btn-sm" type="submit">＋ Add</button></form>`);
+};
+ACT['chap-open'] = el => chapModal(el.dataset.id);
+FORMS['chap-add'] = safe(async f => { const n = fdata(f).name.trim(); const sid = f.dataset.sid; await q(S.sb.from('chapters').insert({ subject_id: sid, name: n, sort_order: AD.chapters.filter(c => c.subject_id === sid).length + 1 })); await adRefs(); chapModal(sid); toast('Chapter added', 'ok'); });
+FORMS['chap-ren'] = safe(async f => { await q(S.sb.from('chapters').update({ name: fdata(f).name.trim() }).eq('id', f.dataset.id)); await adRefs(); toast('Chapter renamed', 'ok'); });
+ACT['chap-del'] = safe(async el => { await q(S.sb.from('chapters').delete().eq('id', el.dataset.id)); await adRefs(); chapModal(el.dataset.sid); toast('Chapter deleted', 'ok'); });
+
+/* ---------------- Students ---------------- */
+let STU = { list: [], filter: 'all', term: '' };
+async function adStudents(tok) {
+  adminPage('students', `<div class="card"><div class="row"><input class="in" style="flex:1;min-width:200px" placeholder="🔎 Search name or email…" data-in="stu-q"><select class="in" style="width:auto" data-in="stu-f"><option value="all">All</option><option value="reg">Registered</option><option value="guest">Guests</option></select><button class="btn btn-ghost btn-sm" data-act="stu-csv">⬇ Export CSV</button></div><div id="stu-list" style="margin-top:12px">${spinner()}</div></div>`);
+  await loadStudents(tok);
+}
+const loadStudents = safe(async tok => { STU.list = await rpc('admin_students', { p_search: STU.term }); if (tok && stale(tok)) return; drawStudents(); });
+function drawStudents() {
+  const l = STU.list.filter(s => STU.filter === 'all' || (STU.filter === 'guest' ? s.is_guest : !s.is_guest)); const box = $('#stu-list'); if (!box) return;
+  box.innerHTML = l.map(s => `<div class="list-item" style="flex-wrap:wrap"><div class="rankno">${esc(initials(s.full_name))}</div><div style="flex:1;min-width:180px"><b>${esc(s.full_name)}</b> ${s.is_guest ? '<span class="chip amber">Guest</span>' : ''}${s.is_blocked ? '<span class="chip red">Blocked</span>' : ''}
+    <div class="small muted">${esc(s.email || 'no email')} · ${esc(s.class_name || 'class not set')} · joined ${fmtDate(s.created_at)}</div></div><div class="small center"><b>${s.attempts}</b> tests<br><span class="muted">avg ${s.avg_pct ?? '—'}%</span></div>
+    <button class="btn btn-ghost btn-sm" data-act="stu-view" data-id="${s.id}">View</button><button class="btn btn-sm ${s.is_blocked ? 'btn-success' : 'btn-danger'}" data-act="stu-block" data-id="${s.id}">${s.is_blocked ? 'Unblock' : 'Block'}</button></div>`).join('') || '<div class="empty">No students found.</div>';
+}
+INPUTS['stu-q'] = debounce(el => { STU.term = el.value.trim(); loadStudents(); }, 350); INPUTS['stu-f'] = el => { STU.filter = el.value; drawStudents(); };
+ACT['stu-view'] = safe(async el => {
+  const s = byId(STU.list, el.dataset.id), at = await rpc('admin_student_attempts', { p_user: s.id });
+  modal(`<div class="mhead"><h2>${esc(s.full_name)}</h2><button class="icon-btn" data-act="modal-close">✕</button></div><div class="grid g3" style="margin-bottom:10px"><div class="tile"><div class="k">Tests</div><div class="v">${s.attempts}</div></div><div class="tile"><div class="k">Average</div><div class="v">${s.avg_pct ?? 0}%</div></div><div class="tile"><div class="k">Type</div><div class="v" style="font-size:1.2rem">${s.is_guest ? 'Guest' : 'Registered'}</div></div></div>
+   ${at.map(a => `<a class="list-item" href="#/result/${a.id}" style="color:inherit"><div style="flex:1"><b>${esc(a.title)}</b><div class="small muted">${esc(a.subject)} · ${fmtDT(a.submitted_at)} · ${fmtDur(a.time_taken_seconds)}</div></div><span class="chip ${a.passed ? 'green' : 'red'}">${num(a.percentage)}%</span></a>`).join('') || '<div class="empty">No test history</div>'}`);
+});
+ACT['stu-block'] = safe(async el => {
+  const s = byId(STU.list, el.dataset.id), to = !s.is_blocked;
+  if (!await confirmBox({ title: to ? 'Block this account?' : 'Unblock this account?', message: to ? `${s.full_name} will no longer be able to start tests.` : `${s.full_name} will be able to use Quizy again.`, ok: to ? 'Block' : 'Unblock', danger: to })) return;
+  await rpc('admin_set_blocked', { p_user: s.id, p_blocked: to }); s.is_blocked = to; drawStudents(); toast(to ? 'Account blocked' : 'Account unblocked', 'ok');
+});
+
+/* ---------------- Announcements ---------------- */
+let ANN = [];
+async function adAnn(tok) {
+  ANN = await q(S.sb.from('announcements').select('*').order('created_at', { ascending: false })); if (stale(tok)) return;
+  adminPage('announcements', `<div class="row between" style="margin-bottom:12px"><p class="muted small">Active announcements appear on every student's dashboard.</p><button class="btn btn-primary" data-act="ann-new">＋ New</button></div>
+   <div class="card">${ANN.map(a => `<div class="list-item" style="flex-wrap:wrap;align-items:flex-start"><div style="flex:1;min-width:200px"><b>${esc(a.title)}</b> <span class="chip ${a.is_active ? 'green' : 'amber'}">${a.is_active ? 'Active' : 'Hidden'}</span><div class="small muted" style="white-space:pre-wrap">${esc(a.body || '')}</div><div class="tiny muted">${fmtDate(a.created_at)}</div></div>
+    <div class="row"><button class="btn btn-ghost btn-sm" data-act="ann-tog" data-id="${a.id}">${a.is_active ? 'Hide' : 'Show'}</button><button class="btn btn-ghost btn-sm" data-act="ann-edit" data-id="${a.id}">✏️</button><button class="btn btn-danger btn-sm" data-act="ann-del" data-id="${a.id}">🗑</button></div></div>`).join('') || '<div class="empty">No announcements yet.</div>'}</div>`);
+}
+const annForm = a => { a = a || { is_active: true }; modal(`<div class="mhead"><h2>${a.id ? 'Edit' : 'New'} announcement</h2><button class="icon-btn" data-act="modal-close">✕</button></div><form data-form="ann" data-id="${a.id || ''}"><label class="f">Title</label><input class="in" name="title" required maxlength="160" value="${esc(a.title)}"><label class="f">Message</label><textarea class="in" name="body" maxlength="1000">${esc(a.body)}</textarea><label class="check"><input type="checkbox" name="is_active" ${a.is_active ? 'checked' : ''}> Visible to students</label><div class="row" style="justify-content:flex-end"><button class="btn btn-primary" type="submit">Save</button></div></form>`, { small: true }); };
+ACT['ann-new'] = () => annForm(null); ACT['ann-edit'] = el => annForm(byId(ANN, el.dataset.id));
+FORMS.ann = safe(async f => { const d = fdata(f), row = { title: d.title.trim(), body: d.body.trim() || null, is_active: !!d.is_active }; if (f.dataset.id) await q(S.sb.from('announcements').update(row).eq('id', f.dataset.id)); else await q(S.sb.from('announcements').insert({ ...row, created_by: S.session.user.id })); toast('Saved', 'ok'); closeModal(); route(); });
+ACT['ann-tog'] = safe(async el => { const a = byId(ANN, el.dataset.id); await q(S.sb.from('announcements').update({ is_active: !a.is_active }).eq('id', a.id)); route(); });
+ACT['ann-del'] = safe(async el => { if (!await confirmBox({ title: 'Delete announcement?', ok: 'Delete', danger: true })) return; await q(S.sb.from('announcements').delete().eq('id', el.dataset.id)); toast('Deleted', 'ok'); route(); });
+
+/* ---------------- Advertisements (admin only) ---------------- */
+const PLACEMENTS = [['pre_test', '1. Before starting a test', 'Shown on the test instructions page. Never shown during the exam.'], ['post_submit', '2. After submitting a test', 'Shown on the result page after the exam is finished.'], ['pre_pdf', '3. Before downloading result PDF', 'Shown in a window before the PDF is generated. The download button is always available.']];
+async function adAds(tok) {
+  const ads = await q(S.sb.from('advertisements').select('*')); await loadSettings(); if (stale(tok)) return; const st = S.settings;
+  adminPage('ads', `<div class="card" style="margin-bottom:14px"><h2>Google AdSense setup</h2><p class="small muted">Keep ads <b>OFF</b> until Google has approved your site and you have created ad units. Approval is decided by Google and is never guaranteed.</p>
+   <form data-form="adsense"><label class="f">Publisher ID (looks like ca-pub-1234567890123456)</label><input class="in" name="adsense_client" value="${esc(st.adsense_client)}" placeholder="ca-pub-…" pattern="(ca-pub-[0-9]{8,20})?">
+   <label class="check"><input type="checkbox" name="ads_enabled" ${st.ads_enabled ? 'checked' : ''}> Master switch – allow ads to display (visitors must also accept cookies)</label><button class="btn btn-primary btn-sm" type="submit">Save AdSense settings</button></form>
+   <div class="divider"></div><p class="small muted"><b>ads.txt:</b> after approval, create a plain-text file named <code class="k">ads.txt</code> in the same folder as index.html (site root) containing this line, then redeploy:</p><pre class="k">google.com, ${esc((st.adsense_client || 'ca-pub-XXXXXXXXXXXXXXXX').replace('ca-', ''))}, DIRECT, f08c47fec0942fa0</pre></div>
+   ${PLACEMENTS.map(([p, t, d]) => { const a = ads.find(x => x.placement === p) || { placement: p, ad_type: 'adsense' }; const live = a.is_active && st.ads_enabled;
+    return `<div class="card" style="margin-bottom:12px"><h2>${t} <span class="chip ${live ? 'green' : 'amber'}">${live ? 'Live' : a.is_active ? 'Master OFF' : 'Off'}</span></h2><p class="small muted">${d}</p>
+    <form data-form="ad" data-p="${p}"><label class="check"><input type="checkbox" name="is_active" ${a.is_active ? 'checked' : ''}> Activate this placement</label>
+     <div class="form-grid"><div><label class="f">Ad type</label><select class="in" name="ad_type"><option value="adsense" ${a.ad_type === 'adsense' ? 'selected' : ''}>Google AdSense unit</option><option value="image" ${a.ad_type === 'image' ? 'selected' : ''}>Image / sponsor banner</option></select></div>
+      <div><label class="f">AdSense ad-unit slot ID (numbers)</label><input class="in" name="adsense_slot" value="${esc(a.adsense_slot)}" pattern="([0-9]{5,20})?" placeholder="1234567890"></div>
+      <div><label class="f">Banner image URL</label><div class="row" style="flex-wrap:nowrap"><input class="in" name="image_url" value="${esc(a.image_url)}"><label class="btn btn-ghost btn-sm" style="cursor:pointer">Upload<input type="file" accept="image/*" hidden data-in="ad-img" data-p="${p}"></label></div></div>
+      <div><label class="f">Banner link URL</label><input class="in" name="link_url" type="url" value="${esc(a.link_url)}" placeholder="https://…"></div></div>
+     <button class="btn btn-primary btn-sm" style="margin-top:10px" type="submit">Save placement</button></form></div>`; }).join('')}`);
+}
+FORMS.adsense = safe(async f => { const d = fdata(f); await q(S.sb.from('website_settings').upsert([{ key: 'adsense_client', value: d.adsense_client.trim() }, { key: 'ads_enabled', value: !!d.ads_enabled }])); toast('AdSense settings saved', 'ok'); route(); });
+INPUTS['ad-img'] = safe(async el => { const f = el.files[0]; if (!f) return; const url = await uploadMedia(f, 'ads'); $('form[data-p="' + el.dataset.p + '"] [name=image_url]').value = url; toast('Image uploaded – press Save placement', 'ok'); });
+FORMS.ad = safe(async f => {
+  const d = fdata(f), row = { placement: f.dataset.p, ad_type: d.ad_type, adsense_slot: d.adsense_slot.trim() || null, image_url: d.image_url.trim() || null, link_url: d.link_url.trim() || null, is_active: !!d.is_active };
+  if (row.is_active && row.ad_type === 'adsense' && !row.adsense_slot) return toast('Enter the AdSense ad-unit slot ID before activating', 'warn');
+  if (row.is_active && row.ad_type === 'image' && !safeUrl(row.image_url)) return toast('Add a banner image before activating', 'warn');
+  await q(S.sb.from('advertisements').upsert(row, { onConflict: 'placement' })); toast('Placement saved', 'ok'); await refreshCatalog(); route();
+});
+
+/* ---------------- Website settings ---------------- */
+async function adSite(tok) {
+  await loadSettings(); if (stale(tok)) return; const st = S.settings;
+  adminPage('site', `<div class="card" style="margin-bottom:14px"><h2>Branding &amp; contact</h2><form data-form="site">
+   <div class="form-grid"><div><label class="f">App name</label><input class="in" name="app_name" required maxlength="40" value="${esc(st.app_name)}"></div><div><label class="f">Tagline</label><input class="in" name="tagline" maxlength="100" value="${esc(st.tagline)}"></div></div>
+   <label class="f">Description (shown to search engines &amp; About page)</label><textarea class="in" name="description" maxlength="400">${esc(st.description)}</textarea>
+   <label class="f">Public contact email (used on Contact &amp; Privacy pages)</label><input class="in" type="email" name="contact_email" value="${esc(st.contact_email)}" placeholder="support@yourdomain.com">
+   <div class="form-grid"><div><label class="f">Logo</label>${safeUrl(st.logo_url) ? `<img src="${esc(safeUrl(st.logo_url))}" alt="" style="height:48px;margin-bottom:6px;border-radius:10px">` : ''}<input class="in" name="logo_url" value="${esc(st.logo_url)}" placeholder="https://… or upload"><label class="btn btn-ghost btn-sm" style="cursor:pointer;margin-top:6px">Upload logo<input type="file" accept="image/*" hidden data-in="site-img" data-f="logo_url"></label></div>
+    <div><label class="f">Admin profile image</label>${safeUrl(st.admin_avatar_url) ? `<img src="${esc(safeUrl(st.admin_avatar_url))}" alt="" style="height:48px;margin-bottom:6px;border-radius:10px">` : ''}<input class="in" name="admin_avatar_url" value="${esc(st.admin_avatar_url)}" placeholder="https://… or upload"><label class="btn btn-ghost btn-sm" style="cursor:pointer;margin-top:6px">Upload image<input type="file" accept="image/*" hidden data-in="site-img" data-f="admin_avatar_url"></label></div></div>
+   <button class="btn btn-primary" style="margin-top:14px" type="submit">Save website settings</button></form></div>
+  <div class="card"><h2>Home banners <button class="btn btn-primary btn-sm" data-act="ban-new">＋ Add banner</button></h2>${(st.banners || []).map((b, i) => `<div class="list-item"><img src="${esc(safeUrl(b.image_url))}" alt="" style="width:90px;height:50px;object-fit:cover;border-radius:10px"><div style="flex:1;min-width:0"><b>${esc(b.title || 'Banner')}</b> <span class="chip ${b.active !== false ? 'green' : 'amber'}">${b.active !== false ? 'Active' : 'Hidden'}</span></div><button class="btn btn-ghost btn-sm" data-act="ban-edit" data-i="${i}">✏️</button><button class="btn btn-danger btn-sm" data-act="ban-del" data-i="${i}">🗑</button></div>`).join('') || '<div class="empty">No banners yet.</div>'}</div>`);
+}
+INPUTS['site-img'] = safe(async el => { const f = el.files[0]; if (!f) return; const url = await uploadMedia(f, 'branding'); $(`[name=${el.dataset.f}]`).value = url; toast('Uploaded – press Save', 'ok'); });
+FORMS.site = safe(async f => {
+  const d = fdata(f); const keys = ['app_name', 'tagline', 'description', 'contact_email', 'logo_url', 'admin_avatar_url'];
+  await q(S.sb.from('website_settings').upsert(keys.map(k => ({ key: k, value: (d[k] || '').trim() })))); toast('Website settings saved', 'ok'); await loadSettings(); route();
+});
+const saveBanners = async arr => { await q(S.sb.from('website_settings').upsert({ key: 'banners', value: arr })); await loadSettings(); route(); };
+const banForm = (b, i) => { b = b || { active: true }; modal(`<div class="mhead"><h2>${i == null ? 'Add' : 'Edit'} banner</h2><button class="icon-btn" data-act="modal-close">✕</button></div><form data-form="banner" data-i="${i ?? ''}"><label class="f">Title</label><input class="in" name="title" maxlength="80" value="${esc(b.title)}">
+  <label class="f">Image URL or upload (wide image works best)</label><div class="row" style="flex-wrap:nowrap"><input class="in" name="image_url" required value="${esc(b.image_url)}"><label class="btn btn-ghost btn-sm" style="cursor:pointer">Upload<input type="file" accept="image/*" hidden data-in="site-img" data-f="image_url"></label></div>
+  <label class="f">Link (optional)</label><input class="in" type="url" name="link_url" value="${esc(b.link_url)}"><label class="check"><input type="checkbox" name="active" ${b.active !== false ? 'checked' : ''}> Show on student home</label><div class="row" style="justify-content:flex-end"><button class="btn btn-primary" type="submit">Save banner</button></div></form>`, { small: true }); };
+ACT['ban-new'] = () => banForm(null); ACT['ban-edit'] = el => banForm(S.settings.banners[+el.dataset.i], +el.dataset.i);
+FORMS.banner = safe(async f => { const d = fdata(f), arr = [...(S.settings.banners || [])], b = { title: d.title.trim(), image_url: d.image_url.trim(), link_url: d.link_url.trim(), active: !!d.active }; if (!safeUrl(b.image_url)) return toast('Enter a valid image URL', 'warn'); f.dataset.i === '' ? arr.push(b) : arr[+f.dataset.i] = b; await saveBanners(arr); });
+ACT['ban-del'] = safe(async el => { if (!await confirmBox({ title: 'Delete banner?', ok: 'Delete', danger: true })) return; const arr = [...S.settings.banners]; arr.splice(+el.dataset.i, 1); await saveBanners(arr); });
+
+/* =====================================================================
+   QUIZHUB EXTRAS: mascot, XP/levels/streaks, sound, confetti, advanced exam tools
+   ===================================================================== */
+let mascotN = 0;
+function mascot(mood = 'happy', size = 96, id = '') {
+  const g = 'mg' + (++mascotN);
+  return `<svg ${id ? `id="${id}"` : ''} class="mascot m-${mood}" viewBox="0 0 120 124" width="${size}" height="${size}" role="img" aria-label="Quizzy, the QuizHub mascot"><defs><linearGradient id="${g}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3ea6ff"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+  <ellipse cx="60" cy="118" rx="28" ry="4.5" fill="rgba(0,0,0,.28)"/>
+  <g class="m-body"><circle cx="60" cy="68" r="44" fill="url(#${g})"/><circle cx="60" cy="68" r="44" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="2"/>
+   <polygon points="60,12 102,28 60,43 18,28" fill="#1b2150"/><rect x="42" y="36" width="36" height="11" rx="4" fill="#1b2150"/><path d="M96 29v18" stroke="#ffc23e" stroke-width="3" stroke-linecap="round"/><circle cx="96" cy="50" r="4" fill="#ffc23e"/>
+   <g class="m-eyes"><ellipse cx="44" cy="68" rx="10" ry="12" fill="#fff"/><ellipse cx="76" cy="68" rx="10" ry="12" fill="#fff"/><circle class="m-pupil" cx="46" cy="70" r="5.5" fill="#161c3d"/><circle class="m-pupil" cx="78" cy="70" r="5.5" fill="#161c3d"/><circle cx="48" cy="67" r="1.8" fill="#fff"/><circle cx="80" cy="67" r="1.8" fill="#fff"/></g>
+   <path class="m-brow" d="M34 52q10-8 20-2M66 50q10-6 20 2" stroke="#161c3d" stroke-width="3" fill="none" stroke-linecap="round"/>
+   <circle cx="30" cy="84" r="6" fill="#ff7ab8" opacity=".55"/><circle cx="90" cy="84" r="6" fill="#ff7ab8" opacity=".55"/>
+   <path class="mo mo-happy" d="M46 86q14 14 28 0" stroke="#161c3d" stroke-width="4" fill="none" stroke-linecap="round"/>
+   <path class="mo mo-sad" d="M48 98q12-12 24 0" stroke="#161c3d" stroke-width="4" fill="none" stroke-linecap="round"/>
+   <ellipse class="mo mo-wow" cx="60" cy="92" rx="7" ry="9" fill="#161c3d"/>
+   <path class="mo mo-cheer" d="M42 84q18 26 36 0z" fill="#161c3d"/>
+   <path class="mo mo-think" d="M50 94q8-5 20 0" stroke="#161c3d" stroke-width="4" fill="none" stroke-linecap="round"/>
+   <g class="m-spark" fill="#ffc23e"><path d="M10 30l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/><path d="M108 70l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></g></g></svg>`;
+}
+const setMood = (id, mood) => { const el = document.getElementById(id); if (el) el.setAttribute('class', 'mascot m-' + mood); };
+function mascotSay(mood, ms) { if (!EX) return; setMood('ex-mascot', mood); clearTimeout(EX.mt); EX.mt = setTimeout(() => { if (EX) setMood('ex-mascot', exLeft() <= 60 ? 'wow' : 'happy'); }, ms); }
+
+/* sound effects (off by default, toggle with the speaker button) */
+let AC = null;
+function soundOn() { return !!store.get('quizy_sound', false); }
+function sfx(kind) {
+  if (!soundOn()) return;
+  try {
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    const seq = { tick: [[660, .06]], mark: [[520, .08], [700, .08]], win: [[523, .12], [659, .12], [784, .12], [1047, .25]], lose: [[392, .15], [330, .15], [262, .3]], submit: [[440, .1], [660, .18]] }[kind] || [];
+    let t = AC.currentTime;
+    seq.forEach(([f, d]) => { const o = AC.createOscillator(), g = AC.createGain(); o.type = 'triangle'; o.frequency.value = f; g.gain.setValueAtTime(.08, t); g.gain.exponentialRampToValueAtTime(.0001, t + d); o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + d); t += d * .9; });
+  } catch { }
+}
+ACT.sound = () => { store.set('quizy_sound', !soundOn()); $$('[data-act="sound"]').forEach(b => b.textContent = soundOn() ? '🔊' : '🔇'); if (soundOn()) sfx('tick'); };
+
+function confetti() {
+  if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const c = document.createElement('canvas'); c.className = 'confetti'; c.width = innerWidth; c.height = innerHeight; document.body.appendChild(c);
+  const x = c.getContext('2d'), cols = ['#3ea6ff', '#8b5cf6', '#27e0a3', '#ffc23e', '#ff5c7a', '#ff4fd8'];
+  const P = Array.from({ length: 90 }, () => ({ x: c.width / 2, y: c.height * .35, vx: (Math.random() - .5) * 12, vy: -Math.random() * 11 - 3, s: 5 + Math.random() * 6, c: cols[Math.random() * 6 | 0], r: Math.random() * 6, vr: (Math.random() - .5) * .4 }));
+  let f = 0; (function step() { x.clearRect(0, 0, c.width, c.height); P.forEach(p => { p.vy += .28; p.x += p.vx; p.y += p.vy; p.r += p.vr; x.save(); x.translate(p.x, p.y); x.rotate(p.r); x.fillStyle = p.c; x.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * .6); x.restore(); }); if (++f < 150) requestAnimationFrame(step); else c.remove(); })();
+}
+
+/* XP, level and daily streak – calculated from the student's own submitted attempts */
+function gameStats(att) {
+  const xp = Math.round(att.reduce((s, a) => s + Number(a.percentage) + (a.passed ? 20 : 0), 0));
+  const level = Math.floor(Math.sqrt(xp / 50)) + 1, lo = 50 * (level - 1) ** 2, hi = 50 * level ** 2;
+  const titles = ['Rookie', 'Explorer', 'Challenger', 'Scholar', 'Champion', 'Legend'];
+  const days = new Set(att.map(a => new Date(a.submitted_at).toDateString()));
+  let streak = 0; const d = new Date(); if (!days.has(d.toDateString())) d.setDate(d.getDate() - 1);
+  while (days.has(d.toDateString())) { streak++; d.setDate(d.getDate() - 1); }
+  return { xp, level, pct: (xp - lo) / (hi - lo) * 100, next: hi - xp, title: titles[Math.min(level - 1, 5)], streak, today: days.has(new Date().toDateString()) };
+}
+
+/* advanced exam tools */
+function applyFont() { document.documentElement.style.setProperty('--qfs', store.get('quizy_qfs', 1.05) + 'rem'); }
+ACT['ex-font'] = el => { const v = Math.min(1.6, Math.max(.85, store.get('quizy_qfs', 1.05) + .1 * +el.dataset.d)); store.set('quizy_qfs', +v.toFixed(2)); applyFont(); };
+function exJump(test) { const n = EX.qs.length; for (let k = 1; k <= n; k++) { const i = (EX.idx + k) % n, a = EX.ans.get(EX.qs[i].id) || {}; if (test(a)) { EX.idx = i; drawExam(); window.scrollTo(0, 0); return; } } toast('Nothing to jump to', 'info', 1500); }
+ACT['ex-nextun'] = () => exJump(a => !a.o);
+ACT['ex-nextmk'] = () => exJump(a => a.m);
+function exVis() {
+  if (!EX || EX.submitting) return;
+  if (document.hidden) { EX.tabs = (EX.tabs || 0) + 1; const c = $('#tabs'); if (c) { c.textContent = '⚠ Left screen ×' + EX.tabs; c.classList.remove('hidden'); } }
+  else if (EX.tabs) toast('Please stay on the test screen – leaving it is noted (' + EX.tabs + ').', 'warn');
+}
+
+/* share result */
+ACT['res-share'] = async () => {
+  const r = RES, a = r.attempt, text = `I scored ${num(a.score, 2)}/${num(a.total_marks, 2)} (${num(a.percentage)}%) in "${r.test.title}" on ${appName()}! 🎯`;
+  try { if (navigator.share) await navigator.share({ title: appName(), text, url: location.origin + location.pathname }); else { await navigator.clipboard.writeText(text); toast('Result copied – paste it anywhere!', 'ok'); } } catch { toast('Sharing cancelled', 'info'); }
+};
+
+/* CSV helpers (cells starting with = + - @ are neutralised against spreadsheet formula injection) */
+const csvCell = v => { let s = String(v ?? ''); if (/^[=+\-@]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
+const toCSV = rows => rows.map(r => r.map(csvCell).join(',')).join('\n');
+ACT['stu-csv'] = () => download('quizhub-students.csv', toCSV([['Name', 'Email', 'Type', 'Class', 'Tests taken', 'Average %', 'Blocked', 'Joined']].concat(STU.list.map(s => [s.full_name, s.email || '', s.is_guest ? 'Guest' : 'Registered', s.class_name || '', s.attempts, s.avg_pct ?? '', s.is_blocked ? 'Yes' : 'No', fmtDate(s.created_at)]))), 'text/csv');
+let RESROWS = [], RESTITLE = '', RESTEST = '';
+ACT['test-dup'] = safe(async el => { await rpc('admin_duplicate_test', { p_test: el.dataset.id }); toast('Test duplicated as a draft', 'ok'); route(); });
+ACT['test-res'] = safe(async el => {
+  const t = byId(adTestsCache, el.dataset.id); RESROWS = await rpc('admin_test_results', { p_test: t.id }) || []; RESTITLE = t.title; RESTEST = t.id;
+  modal(`<div class="mhead"><h2>📊 ${esc(t.title)}</h2><button class="icon-btn" data-act="modal-close">✕</button></div>
+   ${RESROWS.length ? `<div class="row" style="margin-bottom:10px"><span class="chip">${RESROWS.length} attempts</span><button class="btn btn-ghost btn-sm" data-act="res-csv">⬇ Export CSV</button></div>
+   <div class="scroll-x" style="max-height:60vh;overflow:auto"><table class="t"><tr><th>#</th><th>Student</th><th>Score</th><th>%</th><th>Time</th><th>Result</th><th></th></tr>${RESROWS.map((r, i) => `<tr><td>${i + 1}</td><td>${esc(r.full_name)}${r.is_guest ? ' <span class="chip amber">Guest</span>' : ''}<div class="tiny muted">${esc(r.email || '')}</div></td><td>${num(r.score, 2)}/${num(r.total_marks, 2)}</td><td><b>${num(r.percentage)}%</b></td><td>${fmtDur(r.time_taken_seconds)}</td><td>${r.passed ? '<span class="chip green">Pass</span>' : '<span class="chip red">Fail</span>'}</td><td><button class="btn btn-ghost btn-sm" data-act="att-reset" data-id="${r.id}" title="Delete attempt so the student can retake">🔄 Reset</button></td></tr>`).join('')}</table></div>` : '<div class="empty">No one has submitted this test yet.</div>'}`);
+});
+ACT['res-csv'] = () => download('quizhub-results-' + RESTITLE.replace(/[^A-Za-z0-9]+/g, '-').slice(0, 40) + '.csv', toCSV([['Rank', 'Student', 'Email', 'Guest', 'Score', 'Total marks', 'Percentage', 'Time (s)', 'Passed', 'Submitted']].concat(RESROWS.map((r, i) => [i + 1, r.full_name, r.email || '', r.is_guest ? 'Yes' : 'No', r.score, r.total_marks, r.percentage, r.time_taken_seconds, r.passed ? 'Yes' : 'No', r.submitted_at]))), 'text/csv');
+
+/* =====================================================================
+   QUIZHUB EXTRAS 2: progress page, mistake notebook, certificate, install, admin analysis
+   ===================================================================== */
+const pdfT = s => String(s ?? '').replace(/[^\x20-\x7E -ÿ]/g, '').trim() || '-';
+function bestStreakOf(att) {
+  const days = [...new Set(att.map(a => Math.round(new Date(a.submitted_at).setHours(0, 0, 0, 0) / 86400000)))].sort((x, y) => x - y);
+  let best = 0, cur = 0, prev = null; days.forEach(d => { cur = prev !== null && d === prev + 1 ? cur + 1 : 1; best = Math.max(best, cur); prev = d; }); return best;
+}
+function hatTrick(att) { const a = [...att].reverse(); for (let i = 0; i + 2 < a.length; i++) if (a[i].passed && a[i + 1].passed && a[i + 2].passed) return true; return false; }
+function heatSVG(att) {
+  const counts = {}; att.forEach(a => { const k = new Date(a.submitted_at).toDateString(); counts[k] = (counts[k] || 0) + 1; });
+  const c = 16, g = 4, today = new Date(); today.setHours(0, 0, 0, 0); const first = new Date(today); first.setDate(first.getDate() - 83); const off = first.getDay(), cols = Math.ceil((84 + off) / 7);
+  let out = '';
+  for (let i = 0; i < 84; i++) {
+    const d = new Date(first); d.setDate(first.getDate() + i); const n = counts[d.toDateString()] || 0, col = Math.floor((i + off) / 7), row = d.getDay();
+    out += `<rect x="${col * (c + g)}" y="${row * (c + g)}" width="${c}" height="${c}" rx="4" fill="${n === 0 ? 'rgba(120,150,255,.14)' : n === 1 ? 'rgba(62,166,255,.45)' : n === 2 ? 'rgba(62,166,255,.8)' : '#8b5cf6'}"><title>${d.toLocaleDateString()}: ${n} test(s)</title></rect>`;
+  }
+  const W = cols * (c + g), H = 7 * (c + g);
+  return `<div class="scroll-x"><svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:${Math.min(W, 300)}px;max-width:${W * 1.6}px" role="img" aria-label="Activity in the last 12 weeks">${out}</svg></div>`;
+}
+async function viewProgress(tok) {
+  setApp(shell('progress', 'My progress', spinner()));
+  const att = await myAttempts(); if (stale(tok)) return;
+  const n = att.length, gs = gameStats(att), tsec = att.reduce((s, a) => s + (a.time_taken_seconds || 0), 0), passRate = n ? att.filter(a => a.passed).length / n * 100 : 0, bs = bestStreakOf(att);
+  const bySub = {}; att.forEach(a => { const nm = subjName(byId(S.tests, a.test_id)?.subject_id) || 'Other'; (bySub[nm] = bySub[nm] || []).push(Number(a.percentage)); });
+  const subs = Object.entries(bySub).map(([name, v]) => ({ name, n: v.reduce((x, y) => x + y, 0) / v.length, c: v.length })).sort((a, b) => b.n - a.n);
+  const trend = att.slice(0, 15).reverse().map(a => ({ v: Number(a.percentage), t: testTitle(a.test_id) }));
+  const ach = [['🚀', 'First Test', 'Complete 1 test', n >= 1], ['📚', 'Dedicated', 'Complete 10 tests', n >= 10], ['🏅', 'Veteran', 'Complete 25 tests', n >= 25], ['🔥', 'Week Streak', '7 days in a row', bs >= 7],
+    ['🎯', 'High Scorer', 'Score 90% or more', att.some(a => a.percentage >= 90)], ['💯', 'Perfectionist', 'Score 100%', att.some(a => a.percentage >= 100)], ['🧠', 'Subject Master', 'Average 80%+ in a subject (3+ tests)', subs.some(s => s.c >= 3 && s.n >= 80)], ['⚡', 'Hat-trick', 'Pass 3 tests in a row', hatTrick(att)]];
+  const tl = (e, k, v) => `<div class="tile"><span class="e">${e}</span><div class="k">${k}</div><div class="v" style="font-size:1.5rem">${v}</div></div>`;
+  setApp(shell('progress', 'My progress', `<div class="card"><div class="mrow">${mascot(n ? 'happy' : 'think', 80)}<div style="flex:1"><b>Level ${gs.level} · ${gs.title}</b><div class="bar" style="margin:8px 0"><i data-w="${Math.max(2, gs.pct)}"></i></div><div class="tiny muted">${gs.xp} XP · ${gs.next} XP to next level</div></div></div></div>
+   <div class="grid g4" style="margin:14px 0">${tl('📝', 'Tests', n)}${tl('⏱', 'Study time', fmtDur(tsec))}${tl('✅', 'Pass rate', num(passRate, 0) + '%')}${tl('🔥', 'Best streak', bs + 'd')}</div>
+   <div class="row" style="margin-bottom:14px"><a class="btn btn-primary btn-sm" href="#/revise">📓 Revise my mistakes</a><a class="btn btn-ghost btn-sm" href="#/leaderboard">🏆 Leaderboard</a></div>
+   <div class="card" style="margin-bottom:14px"><h2>🗓 Activity – last 12 weeks</h2>${heatSVG(att)}<div class="tiny muted" style="margin-top:6px">Darker = more tests that day</div></div>
+   <div class="grid g2"><div class="card"><h2>📈 Recent scores</h2>${lineSVG(trend)}</div><div class="card"><h2>📚 Subject averages</h2>${hbars(subs, { suffix: '%', max: 100, cls: 'g' })}</div></div>
+   <div class="card" style="margin-top:14px"><h2>🏅 Achievements <span class="small muted">${ach.filter(x => x[3]).length}/${ach.length} unlocked</span></h2><div class="grid g4">${ach.map(b => `<div class="badge3d ${b[3] ? '' : 'locked'}"><div class="b">${b[0]}</div><b class="small">${b[1]}</b><span class="tiny muted">${b[2]}</span></div>`).join('')}</div></div>`)); animateIn();
+}
+
+/* ---- mistake notebook (flashcards built from questions you got wrong) ---- */
+let REV = { list: [], i: 0, shown: false };
+async function viewRevise(tok) {
+  setApp(shell('progress', 'Revise mistakes', spinner())); const list = await rpc('my_mistakes', { p_limit: 100 }); if (stale(tok)) return;
+  REV = { list: list || [], i: 0, shown: false }; drawRevise();
+}
+function drawRevise() {
+  const r = REV.list[REV.i];
+  if (!r) { setApp(shell('progress', 'Revise mistakes', `<div class="card center">${mascot('cheer', 110)}<h2 style="justify-content:center;margin:10px 0">No mistakes to revise 🎉</h2><p class="muted" style="margin-bottom:14px">Questions you get wrong will show up here as flashcards.</p><a class="btn btn-primary" href="#/browse">Take a test</a></div>`)); return; }
+  const sel = r.selected_option_id, cor = r.correct_option_id;
+  setApp(shell('progress', 'Revise mistakes', `<div class="row between" style="margin-bottom:10px"><span class="chip purple">Card ${REV.i + 1} of ${REV.list.length}</span><span class="small muted">${esc(r.subject)} · ${esc(r.test_title)}</span></div>
+   <div class="card"><div class="mrow" style="align-items:flex-start">${mascot(REV.shown ? 'happy' : 'think', 56)}<div class="qtext" style="flex:1">${esc(r.text)}</div></div>${safeUrl(r.image_url) ? `<img class="qimg" src="${esc(safeUrl(r.image_url))}" alt="Question image" loading="lazy">` : ''}
+    <div class="qa" style="border:0;padding:0;background:none;margin:10px 0 0">${(r.options || []).map((o, k) => `<div class="o ${REV.shown ? (o.id === cor ? 'ok' : o.id === sel ? 'bad' : '') : ''}"><b>${LET[k]}.</b><span style="flex:1;white-space:pre-wrap">${esc(o.text)}</span>${REV.shown && o.id === cor ? '<span class="chip green">Correct</span>' : ''}${REV.shown && o.id === sel ? '<span class="chip red">You chose</span>' : ''}</div>`).join('')}</div>
+    ${REV.shown ? (r.explanation ? `<div class="expl"><b>Explanation:</b> ${esc(r.explanation)}</div>` : '') : ''}
+    <div class="row" style="margin-top:16px">${REV.shown ? `<button class="btn btn-success" data-act="rev-got">✅ Got it – remove</button>` : `<button class="btn btn-primary" data-act="rev-show">👁 Reveal answer</button>`}<button class="btn btn-ghost" data-act="rev-prev">← Prev</button><button class="btn btn-ghost" data-act="rev-next">Next →</button></div></div>`));
+}
+ACT['rev-show'] = () => { REV.shown = true; drawRevise(); };
+ACT['rev-next'] = () => { REV.i = (REV.i + 1) % Math.max(1, REV.list.length); REV.shown = false; drawRevise(); window.scrollTo(0, 0); };
+ACT['rev-prev'] = () => { REV.i = (REV.i - 1 + REV.list.length) % Math.max(1, REV.list.length); REV.shown = false; drawRevise(); window.scrollTo(0, 0); };
+ACT['rev-got'] = () => { REV.list.splice(REV.i, 1); if (REV.i >= REV.list.length) REV.i = 0; REV.shown = false; drawRevise(); toast('Removed from this session', 'ok', 1500); };
+
+/* ---- leaderboard with weekly / monthly / class filters ---- */
+const LB = { p: 'all', cls: '' };
+async function viewLeaderboard(tok) {
+  setApp(shell('lb', 'Leaderboard', spinner()));
+  const me = S.session.user.id, days = { week: 7, month: 30 }[LB.p] || null; let rows;
+  if (LB.p === 'all' && !LB.cls) rows = await q(S.sb.from('leaderboard').select('*').order('points', { ascending: false }).limit(50));
+  else rows = await rpc('leaderboard_period', { p_days: days, p_class: LB.cls || null });
+  if (stale(tok)) return; rows = rows || [];
+  let extra = ''; const mine = rows.find(r => r.user_id === me);
+  if (!mine && LB.p === 'all' && !LB.cls && !S.profile?.is_guest) { const { data } = await S.sb.from('leaderboard').select('*').eq('user_id', me).maybeSingle(); if (data) { const { count } = await S.sb.from('leaderboard').select('user_id', { count: 'exact', head: true }).gt('points', data.points); extra = `<div class="divider"></div>${lbRow(data, (count || 0), me)}`; } }
+  const tab = (p, l) => `<button class="${LB.p === p ? 'on' : ''}" data-act="lb-p" data-p="${p}">${l}</button>`;
+  setApp(shell('lb', 'Leaderboard', `<div class="card"><div class="tabs">${tab('week', 'This week')}${tab('month', 'This month')}${tab('all', 'All time')}</div>
+   <select class="in" style="margin-bottom:10px" data-in="lb-c"><option value="">All classes</option>${classOptions(LB.cls)}</select>
+   <p class="small muted" style="margin-bottom:8px">Points = sum of your best percentage on each test. Registered students only.</p>${rows.map((r, i) => lbRow(r, i, me)).join('') || '<div class="empty">No rankings yet for this filter – submit a test to appear here!</div>'}${extra}</div>
+   ${S.profile?.is_guest ? '<div class="card flat center" style="margin-top:14px"><p class="muted">Guests are not ranked.</p><button class="btn btn-primary btn-sm" style="margin-top:8px" data-act="upgrade">Register to join the leaderboard</button></div>' : ''}`));
+}
+ACT['lb-p'] = el => { LB.p = el.dataset.p; route(); };
+INPUTS['lb-c'] = el => { LB.cls = el.value; route(); };
+
+/* ---- certificate (passed tests only; also goes through the optional pre-PDF ad) ---- */
+ACT['res-cert'] = () => {
+  if (!RES) return;
+  if (!adConfig('pre_pdf')) return makeCertificate();
+  modal(`<div class="mhead"><h2>🎓 Your certificate is ready</h2><button class="icon-btn" data-act="modal-close">✕</button></div><p class="muted small">Your download is not blocked by the advertisement below.</p>${adHTML('pre_pdf')}<div class="row" style="justify-content:flex-end"><button class="btn btn-primary" data-act="cert-go">⬇ Download certificate</button></div>`, { small: true });
+  mountAds($('#modal-root'));
+};
+ACT['cert-go'] = () => { closeModal(); makeCertificate(); };
+function makeCertificate() {
+  const lib = window.jspdf && window.jspdf.jsPDF; if (!lib) return toast('PDF library could not load. Check your connection and try again.', 'error');
+  const r = RES, a = r.attempt, t = r.test, T = pdfT, doc = new lib({ orientation: 'landscape', unit: 'mm', format: 'a4' }), cx = 148.5;
+  doc.setFillColor(11, 16, 45); doc.rect(0, 0, 297, 210, 'F'); doc.setDrawColor(124, 92, 255); doc.setLineWidth(1.6); doc.rect(8, 8, 281, 194); doc.setDrawColor(62, 166, 255); doc.setLineWidth(.4); doc.rect(12, 12, 273, 186);
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(20); doc.setTextColor(255); doc.text(T(appName()).toUpperCase(), cx, 32, { align: 'center' });
+  doc.setFontSize(32); doc.setTextColor(255, 194, 62); doc.text('CERTIFICATE OF ACHIEVEMENT', cx, 58, { align: 'center' });
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(13); doc.setTextColor(200, 208, 240); doc.text('This certificate is proudly presented to', cx, 76, { align: 'center' });
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(30); doc.setTextColor(255); doc.text(T(r.student.name), cx, 98, { align: 'center' }); doc.setDrawColor(124, 92, 255); doc.setLineWidth(.6); doc.line(80, 103, 217, 103);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(13); doc.setTextColor(200, 208, 240); doc.text('for successfully passing the test', cx, 116, { align: 'center' });
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(19); doc.setTextColor(62, 166, 255); const tl = doc.splitTextToSize(T(t.title), 230); doc.text(tl, cx, 130, { align: 'center' });
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(13); doc.setTextColor(255); doc.text(`${T(t.subject)}  |  ${T(t.class)}${t.stream ? ' - ' + T(t.stream) : ''}`, cx, 130 + tl.length * 8 + 4, { align: 'center' });
+  doc.setFontSize(15); doc.text(`Score: ${num(a.score, 2)} / ${num(a.total_marks, 2)}   |   ${num(a.percentage, 1)}%`, cx, 130 + tl.length * 8 + 16, { align: 'center' });
+  doc.setFontSize(10); doc.setTextColor(150, 160, 200); doc.text('Date: ' + new Date(a.submitted_at).toLocaleDateString(), 24, 186); doc.text('Created by ' + CREATOR + ' - ' + T(appName()), 273, 186, { align: 'right' }); doc.text('Practice certificate - not an official board document.', cx, 193, { align: 'center' });
+  doc.save(T(appName()) + '-Certificate-' + T(t.title).replace(/[^A-Za-z0-9]+/g, '-').slice(0, 40) + '.pdf'); toast('Certificate downloaded', 'ok');
+}
+
+/* ---- install as app (home-screen shortcut) ---- */
+let DIP = null; window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); DIP = e; });
+try {
+  const icon = 'data:image/svg+xml,' + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='#7c5cff'/><text x='32' y='46' font-size='40' text-anchor='middle' fill='white' font-family='Arial' font-weight='700'>Q</text></svg>");
+  const mf = { name: 'QuizHub', short_name: 'QuizHub', start_url: location.href.split('#')[0], display: 'standalone', background_color: '#070b1f', theme_color: '#070b1f', icons: [{ src: icon, sizes: 'any', type: 'image/svg+xml', purpose: 'any' }] };
+  const lk = document.createElement('link'); lk.rel = 'manifest'; lk.href = URL.createObjectURL(new Blob([JSON.stringify(mf)], { type: 'application/manifest+json' })); document.head.appendChild(lk);
+} catch { }
+ACT.install = async () => {
+  if (DIP) { DIP.prompt(); try { await DIP.userChoice; } catch { } DIP = null; return; }
+  modal(`<div class="mhead"><h2>📲 Install ${esc(appName())}</h2><button class="icon-btn" data-act="modal-close">✕</button></div><div class="stack small muted"><p><b style="color:var(--text)">Android (Chrome):</b> tap the ⋮ menu → <b>Add to Home screen</b> / <b>Install app</b>.</p><p><b style="color:var(--text)">iPhone (Safari):</b> tap the Share button → <b>Add to Home Screen</b>.</p><p><b style="color:var(--text)">Desktop (Chrome/Edge):</b> click the install icon at the right of the address bar.</p></div>`, { small: true });
+};
+
+/* ---- admin: per-question analysis + reset a student's attempt ---- */
+ACT['q-stats'] = safe(async () => {
+  const rows = await rpc('admin_question_stats', { p_test: AQ.test.id }) || [], tot = rows[0]?.attempts || 0;
+  modal(`<div class="mhead"><h2>📈 Question analysis</h2><button class="icon-btn" data-act="modal-close">✕</button></div>${tot ? `<p class="small muted" style="margin-bottom:10px">Based on ${tot} submitted attempt(s). Hardest questions first.</p>` + rows.map(x => ({ ...x, acc: x.correct / tot * 100 })).sort((a, b) => a.acc - b.acc).map(x => `<div class="qa"><div class="row between"><b>Q${x.position}</b><span class="chip ${x.acc < 40 ? 'red' : x.acc < 70 ? 'amber' : 'green'}">${num(x.acc, 0)}% correct</span></div><div class="small" style="margin:6px 0">${esc(x.text)}</div><div class="bar ${x.acc < 40 ? 'r' : 'g'}"><i data-w="${Math.max(2, x.acc)}"></i></div><div class="tiny muted" style="margin-top:4px">✅ ${x.correct} · ❌ ${x.wrong} · ➖ ${Math.max(0, tot - x.correct - x.wrong)} skipped</div></div>`).join('') : '<div class="empty">No one has attempted this test yet.</div>'}`);
+  animateIn($('#modal-root'));
+});
+ACT['att-reset'] = safe(async el => {
+  if (!await confirmBox({ title: 'Reset this attempt?', message: 'The attempt is deleted so the student can take the test again. This cannot be undone.', ok: 'Reset', danger: true })) return;
+  await q(S.sb.from('test_attempts').delete().eq('id', el.dataset.id)); toast('Attempt reset', 'ok'); ACT['test-res']({ dataset: { id: RESTEST } });
+});
+
+/* ---------------- start ---------------- */
+boot();
+</script>
+</body>
+</html>
